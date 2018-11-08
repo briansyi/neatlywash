@@ -113,8 +113,8 @@ export function startOrder(shopId){
 
 // Shop list in same zip code
 export function getShops(order){
-    console.log("zip: "+ zip);
-    const request = axios.get(`/api/getShops?zip=${zip}`)
+//    console.log("zip: "+ zip);
+    const request = axios.get(`/api/getShops?zip=${order}`)
                     .then(response => response.data);
     console.log(request);
     return { 
