@@ -147,7 +147,7 @@ class AddOrder extends Component {
                     <NavLink to={{
                         pathname:'/'
                     }}>
-                    <button onClick={this.onLogout}>Place an pickup</button><Modal /></NavLink>
+                    <button onClick={this.onLogout}>Place an pickup</button></NavLink>
                     {/* <button type="submit">New Order</button>
                     {
                         this.props.history.push("/")
