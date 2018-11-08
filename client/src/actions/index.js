@@ -112,13 +112,13 @@ export function startOrder(shopId){
 
 
 // Shop list in same zip code
-export function getShops(zip){
+export function getShops(order){
     console.log("zip: "+ zip);
     const request = axios.get(`/api/getShops?zip=${zip}`)
                     .then(response => response.data);
     console.log(request);
     return { 
-        type:'GET_ORDERS',
+        type:'ADD_ORDER',
         payload:request
     }
 }

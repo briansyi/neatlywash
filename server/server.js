@@ -15,6 +15,10 @@ const { auth } = require('./middleware/auth')
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+// For production deployment
+// Heroku
+app.use(express.static('client/build'))
+
 // GET //
 // Basic get order
 app.get('/api/getOrder',(req,res)=>{
@@ -169,6 +173,16 @@ app.post('/api/user_update',(req,res)=>{
 
 
 // DELTE //
+if(process.env.NODE_ENV === 'production'){
+    const path = require('path');
+    app.get('/*',(req,res)=>{
+        res.sendfile(path.resolve(__dirname,'../client','build','index.html'))
+    })
+}
+
+
+// For production deployment
+// Heroku
 if(process.env.NODE_ENV === 'production'){
     const path = require('path');
     app.get('/*',(req,res)=>{
