@@ -28,16 +28,18 @@ class HomeContainer extends Component {
 
     render() {
         return (
-            <div className="avatar">
-            <center>
+           // <div className="avatar">
+           <center>
+            <div id="logo_container">
+            
                 <img alt="avatar" src="/images/ani_logo.gif"/>
                {/* {this.renderItems(this.props.orders)}
                <div 
                     className="loadmore"
                     onClick={this.loadmore}
                 >Load More</div> */}
-                </center>
             </div>
+            </center>
             
         );
     }
