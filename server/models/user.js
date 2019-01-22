@@ -49,18 +49,21 @@ const userSchema = mongoose.Schema({
         type:String
     },
     latitude:{
-        type:String
+        type:Number
     },
     longitude:{
-        type:String
+        type:Number
     },
     // Need to revisit
     priceList:{
-        type:String
+        type:Number
     },
     role:{
         type:Number,
         default:0
+    },
+    preferredShop:{
+        type:String
     },
     token:{
         type:String

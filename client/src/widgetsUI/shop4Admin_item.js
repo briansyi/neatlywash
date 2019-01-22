@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const OrderItem = (item) => {
+const Shop4AdminItem = (shop) => {
     return (
-        <Link to={`/orders/${item._id}`} className="order_item">
+        <Link to={`/shops/${item._id}`} className="order_item">
             <div className="order_header">
                 <strong>Order Number: </strong>
                 <h2>{item.orderNo}</h2>
@@ -28,4 +28,4 @@ const OrderItem = (item) => {
     );
 };
 
-export default OrderItem;
+export default Shop4AdminItem;

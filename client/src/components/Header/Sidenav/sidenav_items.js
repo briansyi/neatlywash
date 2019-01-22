@@ -6,11 +6,13 @@ import { connect } from 'react-redux';
 const SidenavItems = ({user}) => {
 
     const items = [
+        // role: 0 = reg. customer; 1 = shop owner; 2 = admin.
         {
             type:'navItem',
             icon:'home',
             text:'Home',
             link:'/',
+            role:0,
             restricted:false
         },
         {
@@ -18,21 +20,24 @@ const SidenavItems = ({user}) => {
             icon:'file-text-o',
             text:'My Profile',
             link:'/user',
+            role:0,
             restricted:true
         },
         // Not now: only for admin.
-        // {
-        //     type:'navItem',
-        //     icon:'file-text-o',
-        //     text:'Add Shop',
-        //     link:'/user/register',
-        //     restricted:true
-        // },
+        {
+            type:'navItem',
+            icon:'file-text-o',
+            text:'Add Shop',
+            link:'/shopRegister',
+            role:0,
+            restricted:true
+        },
         {
             type:'navItem',
             icon:'file-text-o',
             text:'Login',
             link:'/login',
+            role:0,
             restricted:false,
             exclude:true
         },
@@ -48,6 +53,7 @@ const SidenavItems = ({user}) => {
             icon:'file-text-o',
             text:'Order History',
             link:'/user/user-history',
+            role:0,
             restricted:true
         },
         {
@@ -55,6 +61,7 @@ const SidenavItems = ({user}) => {
             icon:'file-text-o',
             text:'Create An Order',
             link:'/orders/new-order',
+            role:0,
             restricted:true
         },
         {
@@ -62,6 +69,7 @@ const SidenavItems = ({user}) => {
             icon:'file-text-o',
             text:'Shop List',
             link:'/user/shop-list',
+            role:0,
             restricted:true
         },
         {
@@ -69,6 +77,7 @@ const SidenavItems = ({user}) => {
             icon:'file-text-o',
             text:'Logout',
             link:'/user/logout',
+            role:0,
             restricted:true
         }
     ]
@@ -87,12 +96,13 @@ const SidenavItems = ({user}) => {
             items.map((item,i)=>{
                 if(user.login.isAuth) {
                     console.log("Hi_1.5");
+                    console.log(user.login.role);
                     return !item.exclude ?
                         element(item,i)
                     :null
                 } else {
                     console.log("Hi");
-                    return !item.restricted ?
+                    return !item.restricted ? //&& (item.role <= user.login.role) ?
                         element(item,i)
                     :null
                 }
@@ -135,4 +145,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps)(SidenavItems)
+export default connect(mapStateToProps)(SidenavItems) 

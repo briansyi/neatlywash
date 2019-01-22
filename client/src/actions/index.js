@@ -84,6 +84,30 @@ export function getOrderWithUser(
 
 }
 
+export function getShopForAdmin(
+    limit = 100,
+    start = 0,
+    order = 'asc',
+    list = ''
+){
+    const request = axios.get(`/api/getShopForAdmin?limit=${limit}&skip=${start}&order=${order}`)
+                    .then(response => {
+                            if(list){
+                                return [...list,...response.data]
+                            } else {
+                                return response.data
+                            }
+                        }
+                    )
+    console.log(request);
+    return {
+        type:'GET_SHOPS4ADMIN',
+        payload:request
+    }
+
+}
+
+
 export function clearOrderWithUser(){
     return {
         type:'CLEAR_ORDER_W_USER',
@@ -112,9 +136,32 @@ export function startOrder(shopId){
 
 
 // Shop list in same zip code
-export function getShops(order){
-//    console.log("zip: "+ zip);
-    const request = axios.get(`/api/getShops?zip=${order}`)
+// Need to work
+export function getShopsByZip(zip, list = ''){
+    const request = axios.get(`/api/getShops?zip=${zip}`)
+                    .then(response => {
+                        if(list){
+                            return [...list,...response.data]
+                        } else {
+                            return response.data
+                        }
+                    }
+                    );
+    
+    console.log("Where am I??");
+    console.log(zip);
+    console.log(request);
+    return { 
+        type:'GET_SHOPS',
+        payload:request
+    }
+}
+
+// Get Shops for edit
+// Only for an Admin.
+export function getShopsForUpdate(zip){
+    //    console.log("zip: "+ zip);
+    const request = axios.get(`/api/getShops?zip=${zip}`)
                     .then(response => response.data);
     console.log(request);
     return { 
@@ -122,6 +169,7 @@ export function getShops(order){
         payload:request
     }
 }
+
 
 // Maybe later?
 export function clearNewBook() {
@@ -166,6 +214,7 @@ export function updateOrder(data){
 }
 
 // Not now
+// Maybe only for an Admin
 export function deleteOrder(id){
     const request = axios.delete(`/api/delete_order?id=${id}`)
                     .then(response => response.data)

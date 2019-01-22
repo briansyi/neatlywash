@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
+import { getShopsByZip } from '../../actions';
+import { connect } from 'react-redux';
  
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
  
 class mapTest extends Component {
+
+  componentWillMount(){
+    this.props.dispatch(getShopsByZip(this.props.user))
+  }
+
+
   static defaultProps = {
     center: {
       lat: 59.95,
@@ -31,5 +39,11 @@ class mapTest extends Component {
     );
   }
 }
- 
-export default mapTest;
+
+function mapStateToProps(state){
+  return{
+      user: state.user
+  }
+}
+
+export default connect(mapStateToProps)(mapTest);

@@ -38,7 +38,11 @@ app.get('/api/auth',auth,(req,res)=>{
         id:req.user._id,
         email:req.user.email,
         firstName:req.user.firstName,
-        lastName:req.user.lastName
+        lastName:req.user.lastName,
+        zip:req.user.zip,
+        lat:req.user.latitude,
+        long:req.user.longitude,
+        preferredShop:req.user.preferredShop
     })
 })
 
@@ -68,6 +72,30 @@ app.get('/api/getHistoryByUser',(req,res)=>{
     })
 })
 
+// Order History by customer //, 
+app.get('/api/getShopForAdmin',(req,res)=>{
+    //console.log("req: " + req.query.email);
+    let skip = parseInt(req.query.skip);
+    let limit = parseInt(req.query.limit);
+    let user = req.query.user;
+    let active = parseInt(1);
+    let inActive = parseInt(-1);
+
+    User.find({$or:[
+        {role:active},
+        {role:inActive}
+    ]}
+    ).skip(skip).sort({_id:user}).limit(limit).exec((err,doc)=>{
+        if(err) return res.status(400).send(err);
+        console.log(doc);
+        res.send(doc)
+    })
+})
+
+
+
+
+
 // Order History by shop
 app.get('/api/getHistoryByShopAll',(req,res)=>{
     Order.find({shopOwnerId:req.query.user}).exec((err,docs)=>{
@@ -92,9 +120,12 @@ app.get('/api/getHistoryByShop',(req,res)=>{
 
 
 // Get shop list in same zip code
+// role:1 -> shop owner only
 app.get('/api/getShops',(req,res)=>{
-    //console.log(req);
-    User.find({zip:req.query.zip}).exec((err,docs)=>{
+    User.find({$and:
+        [{zip:req.query.zip},
+            {role:1}
+        ]}).exec((err,docs)=>{
         if(err) return res.status(400).send(err);
         res.send(docs)
     })

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getOrders } from '../actions';
 
-import BookItem from '../widgetsUI/book_item';
+import BookItem from '../widgetsUI/order_item';
 
 class HomeContainer extends Component {
 
