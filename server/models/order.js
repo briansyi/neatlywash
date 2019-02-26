@@ -51,6 +51,9 @@ const orderSchema = mongoose.Schema({
     deliveredTime:{
         type:Number
     },
+    alternation:{
+        type:Boolean
+    },
     totalPrice:{
         type:Number
     }

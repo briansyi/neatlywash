@@ -34,14 +34,15 @@ class Login extends Component {
     render() {
         let user = this.props.user;
         return (
+        //  <div id="grad">
             <div className="rl_container">
                 <form onSubmit={this.submitForm}>
-                    <h2>Log in here</h2>
+                    <h1>Log in here</h1>
 
                     <div className="form_element">
                         <input 
                             type="email"
-                            placeholder="Enter your mail"
+                            placeholder="Enter your email"
                             value={this.state.email}
                             onChange={this.handleInputEmail}
                         />
@@ -68,6 +69,7 @@ class Login extends Component {
 
                 </form>
             </div>
+        // </div>
         );
     }
 }

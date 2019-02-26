@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getOrders } from '../actions';
+import { NavLink } from "react-router-dom";
 
 import BookItem from '../widgetsUI/order_item';
 
@@ -30,6 +31,11 @@ class HomeContainer extends Component {
         return (
            // <div className="avatar">
            <center>
+               <br/>
+               <br/>
+            <div>
+                <h1>Welcome to Neatly Wash</h1>
+            </div>
             <div id="logo_container">
             
                 <img alt="avatar" src="/images/ani_logo.gif"/>
@@ -38,6 +44,22 @@ class HomeContainer extends Component {
                     className="loadmore"
                     onClick={this.loadmore}
                 >Load More</div> */}
+            </div>
+            <br/>
+            <br/>
+            <br/>
+            <div> 
+                <NavLink to={{
+                        pathname:'/'
+                    }}>
+                    <img alt="Sign Up" src="/images/SignUp.png" style={{width:208,height:53}}/></NavLink>
+            </div>
+            <br/>
+            <div> 
+                <NavLink to={{
+                        pathname:'/login'
+                    }}>
+                    <img alt="Log In" src="/images/LogIn.png"  style={{width:208,height:53}}/></NavLink>
             </div>
             </center>
             

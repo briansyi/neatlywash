@@ -108,6 +108,7 @@ export function getShopForAdmin(
 }
 
 
+
 export function clearOrderWithUser(){
     return {
         type:'CLEAR_ORDER_W_USER',
@@ -168,6 +169,15 @@ export function getShopsForUpdate(zip){
         type:'ADD_ORDER',
         payload:request
     }
+}
+
+
+// Need work
+export function clearShops() {
+    return {
+        type:'CLEAR_SHOPS',
+        payload:{}
+    } 
 }
 
 

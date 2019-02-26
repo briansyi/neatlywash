@@ -15,6 +15,42 @@ const SidenavItems = ({user}) => {
             role:0,
             restricted:false
         },
+        // About Us
+        {
+            type:'navItem',
+            icon:'file-text-o',
+            text:'About Us',
+            link:'/',
+            role:0,
+            restricted:true
+        },
+        // Contact Us
+        {
+            type:'navItem',
+            icon:'file-text-o',
+            text:'Contact Us',
+            link:'/',
+            role:0,
+            restricted:true
+        },
+        // FAQ
+        {
+            type:'navItem',
+            icon:'file-text-o',
+            text:'FAQ',
+            link:'/',
+            role:0,
+            restricted:true
+        },
+        // Today's Pick-ups
+        {
+            type:'navItem',
+            icon:'file-text-o',
+            text:'Today\'s Pickups',
+            link:'/',
+            role:0,
+            restricted:true
+        },
         {
             type:'navItem',
             icon:'file-text-o',

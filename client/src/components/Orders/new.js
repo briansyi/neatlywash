@@ -1,22 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DatePicker from 'react-datepicker';
-import Dropdown from 'react-dropdown';
+import axios from 'axios';
 import moment from 'moment';
 import { NavLink } from "react-router-dom";
 import Popup from "reactjs-popup";
 import { addOrder, getShops } from '../../actions'
+import addDays from "date-fns/add_days";
 
-const options = ['WashFoundry','Saigon Cleaners & Alterations', 'SUDZ Coin Laundry','Super Quality Cleaners','Laundry Basket & Executive Cln'];
-const Modal =  () => (
-    <Popup
-      trigger={<button className="button"> Open Modal </button>}
-      modal
-      closeOnDocumentClick
-    >
-      <span> Hello~! </span>
-    </Popup>
-)
+import '../../../node_modules/react-datepicker/dist/react-datepicker.css'
 
 class AddOrder extends Component {
     // constructor(props) {
@@ -24,48 +16,42 @@ class AddOrder extends Component {
     //     handleChange = this.handleChange.bind(this);
     //   };
     state = {
-        startDate:moment(),
-        endDate:moment(),
         formdata:{
             ownerId:'',
             shopOwnerId:'',
             pickUpDate:'',
             orderStatus:'',
             notesFromCust:'',
-            pickUpDate:moment(),
-            proDeliveryDate:moment(),
+            pickUpDate:moment().add(1, 'day'),
+            proDeliveryDate:moment().add(3, 'day'),
+            alternation: false,
             totalPrice:''
-        },
-        shops:[{
-            id:1,
-            _id:'5be3fd7aa1414c64aeb736df',
-            firstName:'WashFoundry',
-            email:'121@111.com'
-        },{
-            id:2,
-            _id:'5be3fdf7a1414c64aeb736e1',
-            firstName:'Saigon Cleaners & Alterations',
-            email:'121@222.com'
-        },{
-            id:3,
-            _id:'5be3fdbda1414c64aeb736e0',
-            firstName:'SUDZ Coin Laundry',
-            email:'121@333.com'
-        },{
-            id:4,
-            _id:'5be3fe2aa1414c64aeb736e2',
-            firstName:'Super Quality Cleaners',
-            email:'121@444.com'
-        },{
-            id:5,
-            _id:'5be3fe58a1414c64aeb736e3',
-            firstName:'Laundry Basket & Executive Cln',
-            email:'121@555.com'
-        },
-        ]
+        }
     }
-
-
+    handleChangePickUpDate = (date) => {
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                pickUpDate: date
+            }
+        }))
+    }
+    handleChangeDeliveryDate = (date) => {
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                proDeliveryDate: date
+            }
+        }))
+    }
+    handleCheckBox = (e) => {
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                alternation: e.target.checked
+            }
+        }))
+    }
     // Getting Shop list
     componentWillMount(){
         console.log(this.props);
@@ -117,33 +103,58 @@ class AddOrder extends Component {
 
     render() {
         console.log(this.state);
-        
+
+        const style= {
+                'width': 'initial',
+                'padding': '0px',
+                'border': 'none',
+                'marginTop': '0px',
+                'background': 'none'
+            }
+
+  
         return (
             <div className="rl_container article">
                 <form onSubmit={this.submitForm}>
-                    <h2>New Order</h2>
-                    <h3>You select(dropdown menu) :</h3>
-                    <Dropdown options={options} onChange={this._onSelect} value={'WashFoundry'} placeholder="Select a shop" />  
+                    <h2>Schedule a pick up</h2>
+                    <h3>Your pick up address :</h3>
+                     {/* {this.state.user.login.address1} */}
                     <br/>
-                    <h3>Note to the shop</h3>
+                    <div className="forDatePicker">
+                        <h3>Pick Up Date:</h3>
+                        <DatePicker
+                            //placeholderText="Click to select a pick-up date"
+                            selected={this.state.formdata.pickUpDate}
+                            onChange={this.handleChangePickUpDate}
+                            minDate={addDays(new Date(), 1)}
+                            maxDate={addDays(new Date(), 14)}
+                            placeholderText="Pick Up Date"
+                            //showDisabledMonthNavigation
+                            withPortal
+                            //inline
+                        /><h3>06:00 ~ 09:00 PM</h3>
+                    </div>
+                    <hr/>
+                    <div className="forDatePicker">
+                        <h3>Delivery Date:</h3>
+                        <DatePicker
+                            selected={this.state.formdata.proDeliveryDate}
+                            onChange={this.handleChangeDeliveryDate}
+                            minDate={addDays(this.state.formdata.pickUpDate, 2)}
+                            maxDate={addDays(this.state.formdata.pickUpDate, 30)}
+                            placeholderText="Delivery Date"
+                            //showDisabledMonthNavigation
+                            withPortal
+                        /><h3>06:00 ~ 09:00 PM</h3>
+                    </div>
+                    <div>
+                        <h4><input type="checkbox" onChange={this.handleCheckBox} checked={this.state.formdata.alternation} id="alt"/> Alternation? </h4>
+                    </div>
+                    <h3>Pick up instruction</h3>
                     <textarea
                         //value={this.state.formdata.notesFromCust}
                         // onChange={(event)=>this.handleInput(event,'notesFromCust')}
                     />
-                    <div>
-                        <DatePicker
-                            range={[2018,2020]}
-                            selected={this.state.formdata.proDeliveryDate}
-                          //  onChange={(event)=>this.handleInput(event,'pickUpDate')}
-                        /><h3>06:00 ~ 09:00 PM</h3>
-                    </div>
-                    <div>
-                        <DatePicker
-                            range={[2018,2020]}
-                            selected={this.state.formdata.pickUpDate}
-                          //  onChange={(event)=>this.handleInput(event,'pickUpDate')}
-                        /><h3>06:00 ~ 09:00 PM</h3>
-                    </div>
                     <NavLink to={{
                         pathname:'/'
                     }}>
