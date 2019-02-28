@@ -19,7 +19,7 @@ class UserPosts extends Component {
                     }>
                         {item.firstName}
                     </Link></td>
-                    <td>{item.address1}+" "+{item.address2}+"\n"+{item.city}+{item.zip}</td>
+                    <td>{item.address1}+" "+{item.address2}+"\n"+{item.city}+", "+ {item.state}+" " +{item.zip}</td>
                 </tr>
             ))
         :null

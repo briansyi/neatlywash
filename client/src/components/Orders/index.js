@@ -6,7 +6,7 @@ class OrderView extends Component {
 
     componentWillMount(){
         //console.log(this.props.user);
-        this.props.dispatch(getOrderWithUser(this.props.user.login.email))
+        this.props.dispatch(getOrderWithUser(this.props.user.login.id))
     }
 
     componentWillUnmount(){

@@ -8,7 +8,7 @@ class OrderHistoryContainer extends Component {
 
     componentWillMount(){
         console.log(this.props);
-        this.props.dispatch(getOrderWithUser(this.props.user.login.email,1,0,'desc'));
+        this.props.dispatch(getOrderWithUser(this.props.user.login.id,1,0,'desc'));
         console.log(this.props);
     }
 
@@ -25,7 +25,7 @@ class OrderHistoryContainer extends Component {
     loadmore = () => {
         let count = this.props.orders.list.length;
         console.log(this.props);
-        this.props.dispatch(getOrderWithUser(this.props.user.login.email,1,count,'desc',this.props.orders.list))
+        this.props.dispatch(getOrderWithUser(this.props.user.login.id,1,count,'desc',this.props.orders.list))
     }
 
     render() {

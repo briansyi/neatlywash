@@ -5,7 +5,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { NavLink } from "react-router-dom";
 import Popup from "reactjs-popup";
-import { addOrder, getShops } from '../../actions'
+import { addOrder } from '../../actions'
 import addDays from "date-fns/add_days";
 
 import '../../../node_modules/react-datepicker/dist/react-datepicker.css'
@@ -17,17 +17,27 @@ class AddOrder extends Component {
     //   };
     state = {
         formdata:{
-            ownerId:'',
+            orderNo:this.props.user.login.zip+'-'+Math.floor(Date.now() / 1000),
+            ownerId:this.props.user.login.id,
             shopOwnerId:'',
             pickUpDate:'',
-            orderStatus:'',
+            orderStatus:'o',//o:open, c:completed
             notesFromCust:'',
             pickUpDate:moment().add(1, 'day'),
             proDeliveryDate:moment().add(3, 'day'),
             alternation: false,
-            totalPrice:''
+            totalPrice:'',
+            firstName:this.props.user.login.firstName,
+            lastname:this.props.user.login.lastName,
+            address1:this.props.user.login.address1,
+            address2:this.props.user.login.address2,
+            city:this.props.user.login.city,
+            state:this.props.user.login.state,
+            zip:this.props.user.login.zip,
+            custEmail:this.props.user.login.email
         }
     }
+
     handleChangePickUpDate = (date) => {
         this.setState(prevState => ({
             formdata: {
@@ -48,34 +58,10 @@ class AddOrder extends Component {
         this.setState(prevState => ({
             formdata: {
                 ...prevState.formdata,
-                alternation: e.target.checked
+                alternation: !this.state.formdata.alternation
             }
         }))
-    }
-    // Getting Shop list
-    componentWillMount(){
-        console.log(this.props);
-        // this.props.dispatch(getShops("94086",
-        // ...this.state.formdata,
-
-        // ))
-        console.log("! "+this.props);
-    }
-
-    handleClickOutside(){
-        this.setState({
-            listOpen: false
-        })
-    }
-
-    onLogout() {
-        //<Route path="/" exact component={Auth(Home,null)}/>
-    }
-
-    toggleList(){
-        this.setState(prevState => ({
-            listOpen: !prevState.listOpen
-        }))
+        this.props.user.lastOrderNo = this.state.formdata.orderNo
     }
 
     handleInput = (event,name) => {
@@ -91,35 +77,42 @@ class AddOrder extends Component {
 
     submitForm = (e) => {
         e.preventDefault();
+        console.log("Submit Form!")
+        console.log(this.state.formdata)
+        console.log(this.props)
+        this.props.user.lastOrderNo = this.state.formdata.orderNo;
+         this.props.dispatch(addOrder({
+            ...this.state.formdata
+        }))
+
         //this.state.formdata.
-        this.props.dispatch(addOrder({
+/*         this.props.dispatch(addOrder({
             ...this.state.formdata,
             ownerId:this.props.user.login.id
-        }))
+        })) */
     }
-
-
-
+     
+    sendEmailToShop = () => {
+        this.props.dispatch(getOrderWithUser(this.props.user.login.id,1,count,'desc',this.props.orders.list))
+    }
 
     render() {
         console.log(this.state);
-
-        const style= {
-                'width': 'initial',
-                'padding': '0px',
-                'border': 'none',
-                'marginTop': '0px',
-                'background': 'none'
-            }
-
   
         return (
             <div className="rl_container article">
                 <form onSubmit={this.submitForm}>
                     <h2>Schedule a pick up</h2>
                     <h3>Your pick up address :</h3>
-                     {/* {this.state.user.login.address1} */}
+                    {this.state.formdata.firstName} {this.state.formdata.lastname}
                     <br/>
+                    {this.state.formdata.address1}
+                    <br/>
+                    {this.state.formdata.address2}
+                    <br/>
+                    {this.state.formdata.city}, {this.state.formdata.state} {this.state.formdata.zip}
+                    <br/>
+                    <hr/>
                     <div className="forDatePicker">
                         <h3>Pick Up Date:</h3>
                         <DatePicker
@@ -147,19 +140,52 @@ class AddOrder extends Component {
                             withPortal
                         /><h3>06:00 ~ 09:00 PM</h3>
                     </div>
-                    <div>
-                        <h4><input type="checkbox" onChange={this.handleCheckBox} checked={this.state.formdata.alternation} id="alt"/> Alternation? </h4>
+                    <hr/>
+                    <div className="fixWidth">
+                        <h4>
+                            <label>
+                                <input type="checkbox" onChange={this.handleCheckBox} checked={this.state.formdata.alternation} id="alt" name="alt"/> Alternation? 
+                            </label>
+                        </h4>
                     </div>
-                    <h3>Pick up instruction</h3>
+                    <div>
+                    <Popup trigger={<button type="button">Place a Pick Up!</button>} position="top center">
+                    {close =>(
+                        <div className="fixWidth">
+                            <div>Confirm your pick up</div><br/>
+                            <div>
+                                
+                                Pick Up Address:
+                                <br/>
+                                {this.state.formdata.firstName} {this.state.formdata.lastname}
+                                <br/>
+                                {this.state.formdata.address1}
+                                <br/>
+                                {this.state.formdata.city}, {this.state.formdata.state} {this.state.formdata.zip}
+                                <br/>
+                            </div>
+                            <button type="submit">Confirm</button>
+{/*                             <NavLink to={{ pathname:'/orders/confirm'}}>
+                                <button type="submit">Confirm</button>
+                            </NavLink> */}
+                            <button type="button" onClick={() => {close()}}>Cancel</button>
+                        </div>
+                    )}
+                    </Popup>
+                    </div>
+                    {/* <h3>Pick up instruction</h3>
                     <textarea
                         //value={this.state.formdata.notesFromCust}
                         // onChange={(event)=>this.handleInput(event,'notesFromCust')}
-                    />
+                    /> */}
                     <NavLink to={{
-                        pathname:'/'
+                        pathname:'/orders/confirm'
                     }}>
-                    <button onClick={this.onLogout}>Place an pickup</button></NavLink>
-                    {/* <button type="submit">New Order</button>
+
+                    <button onClick={this.onLogout}>Place a Pick Up!</button></NavLink>
+                    {
+                        
+                        /* <button type="submit">New Order</button>
                     {
                         this.props.history.push("/")
                         // this.props.orders.neworder ? 

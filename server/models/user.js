@@ -44,6 +44,9 @@ const userSchema = mongoose.Schema({
     },
     city:{
         type:String
+    },
+    state:{
+        type:String
     },    
     zip:{
         type:String
@@ -62,11 +65,14 @@ const userSchema = mongoose.Schema({
         type:Number,
         default:0
     },
-    preferredShop:{
+    lastOrderNo:{
         type:String
     },
     token:{
         type:String
+    },
+    activated:{
+        type:Boolean
     }
 })
 

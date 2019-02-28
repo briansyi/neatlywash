@@ -13,6 +13,8 @@ import Logout from './components/Admin/logout';
 
 import OrderHistory from './components/Orders/orders';
 import NewOrder from './components/Orders/new';
+import Confirm from './components/Orders/confirm';
+
 
 import ShopMapList from './components/Shops/shopMapList'
 
@@ -35,6 +37,7 @@ const Routes = () => {
                 <Route path="/user/user-history" exact component={Auth(OrderHistory,true)}/>
                 <Route path="/user/shop-list" exact component={Auth(ShopMapList,true)}/>
                 <Route path="/orders/new-order" exact component={Auth(NewOrder,true)}/>
+                <Route path="/orders/confirm" exact component={Auth(Confirm,true)}/>
                 <Route path="/orders/:id" exact component={Auth(OrderView,true)}/>
                 <Route path="/user/user-reviews" exact component={Auth(UserPosts,true)}/>
             </Switch>

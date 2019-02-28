@@ -14,7 +14,7 @@ const ShopItem = (item) => {
                 {item.address2}
             </div>
             <div className="shop_item">
-                {item.city} {item.zip}
+                {item.city}, {item.state} {item.zip}
             </div>
         </Link>
     );

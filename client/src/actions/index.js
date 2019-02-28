@@ -61,13 +61,13 @@ export function getOrders(
 //     }
 // }
 export function getOrderWithUser(
-    email,
+    id,
     limit = 10,
     start = 0,
     order = 'asc',
     list = ''
 ){
-    const request = axios.get(`/api/getHistoryByUser?email=${email}&limit=${limit}&skip=${start}&order=${order}`)
+    const request = axios.get(`/api/getHistoryByUser?id=${id}&limit=${limit}&skip=${start}&order=${order}`)
                     .then(response => {
                             if(list){
                                 return [...list,...response.data]
@@ -82,6 +82,19 @@ export function getOrderWithUser(
         payload:request
     }
 
+}
+
+export function sendEmailToShopOwner(
+    zip,
+    contents
+){
+    const request = axios.get(`/api/sendEmailToShopOwner?zip=${zip}&contents=${contents}`)
+                .then(response => response.data);
+    console.log(request);
+    return { 
+        //type:'ADD_ORDER',
+        //payload:request
+    }
 }
 
 export function getShopForAdmin(
@@ -121,6 +134,7 @@ export function clearOrderWithUser(){
 
 // Place new order
 export function addOrder(order){
+    console.log("Add an order!");
     const request = axios.post('/api/order',order)
         .then(response => response.data);
 
@@ -149,9 +163,6 @@ export function getShopsByZip(zip, list = ''){
                     }
                     );
     
-    console.log("Where am I??");
-    console.log(zip);
-    console.log(request);
     return { 
         type:'GET_SHOPS',
         payload:request

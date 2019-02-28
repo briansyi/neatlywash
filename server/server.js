@@ -42,10 +42,11 @@ app.get('/api/auth',auth,(req,res)=>{
         address1:req.user.address1,
         address2:req.user.address2,
         city:req.user.city,
+        state:req.user.state,
         zip:req.user.zip,
         lat:req.user.latitude,
         long:req.user.longitude,
-        preferredShop:req.user.preferredShop
+        lastOrderNo:req.user.lastOrderNo
     })
 })
 
@@ -59,13 +60,13 @@ app.get('/api/logout',auth,(req,res)=>{
 
 // Order History by customer //, 
 app.get('/api/getHistoryByUser',(req,res)=>{
-    //console.log("req: " + req.query.email);
+    console.log("req: " + req.query.id);
     let skip = parseInt(req.query.skip);
     let limit = parseInt(req.query.limit);
     let order = req.query.order;
 
     Order.find({$or:[
-        {ownerId:req.query.email},
+        {ownerId:req.query.id},
         {shopOwnerId:req.query.email}
         ]}
         ).skip(skip).sort({_id:order}).limit(limit).exec((err,doc)=>{
@@ -137,25 +138,113 @@ app.get('/api/getShops',(req,res)=>{
 // POST //
 // Create an order
 app.post('/api/order',(req,res)=>{
-    const order = new Order(req.body);
-
+    console.log(req.body);
+    const order = new Order(req.body); 
+    console.log(order);
     order.save((err,doc)=>{
+        console.log(err);
         if(err) return res.status(400).send(err);
         res.status(200).json({
             post:true,
             orderId:doc._id
         })
-        
-        // Added for sending an order to the shop
-        User.findOne({'email':req.body.email},(err,user)=>{
-            if(!user) return res.json({isAuth:false,message:'Could not find the shop, email not found'})
+    })
 
-            user.sendEmail((err,user)=>{
-                if(err) return res.status(400).send(err);
-            })
+    User.find({$and:[
+        {zip:req.query.zip},
+        {role:1}
+        ]}
+        ).toArray(function(err, result) {
+        if (err) throw err;
+        console.log(result);
+    }) 
+
+    // Added for sending an order to the shop
+    var nodemailer = require('nodemailer');
+    console.log("We are sending email!");
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'neatlywash.adm@gmail.com',
+            pass: 'superDuper00'
+        }
+    });
+
+    var moment = require('moment');
+    var pickUpDate = moment(req.body.pickUpDate).format('L');
+    var mailOptions = {
+        from: 'neatlywash.adm@gmail.com',
+        to: req.body.custEmail+";"+result.email,
+        subject: 'Here is neatlywash pick up order',
+        text: 'Hi, here is the details of your order:\r\n\n'+pickUpDate +"\r\n" + req.body.address1+"\r\n"+req.body.address2+"\r\n"+req.body.city+", "+req.body.state +" "+ req.body.state +"\r\n\r\n"
+        +"Thank You!",
+
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+    });
+    
+})
+
+app.post('/api/sendEmailToShopOwner',(req,res)=>{
+    console.log(req.body);
+    const order = new Order(req.body); 
+    console.log(order);
+    order.save((err,doc)=>{
+        console.log(err);
+        if(err) return res.status(400).send(err);
+        res.status(200).json({
+            post:true,
+            orderId:doc._id
         })
     })
+
+    User.find({$and:[
+        {zip:req.query.zip},
+        {role:1}
+        ]}
+        ).toArray(function(err, result) {
+        if (err) throw err;
+        console.log(result);
+    }) 
+
+    // Added for sending an order to the shop
+    var nodemailer = require('nodemailer');
+    console.log("We are sending email!");
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'neatlywash.adm@gmail.com',
+            pass: 'superDuper00'
+        }
+    });
+
+    var moment = require('moment');
+    var pickUpDate = moment(req.body.pickUpDate).format('L');
+    var mailOptions = {
+        from: 'neatlywash.adm@gmail.com',
+        to: req.body.custEmail+";"+result.email,
+        subject: 'Here is neatlywash pick up order',
+        text: 'Hi, here is the details of your order:\r\n\n'+pickUpDate +"\r\n" + req.body.address1+"\r\n"+req.body.address2+"\r\n"+req.body.city+", "+req.body.state +" "+ req.body.state +"\r\n\r\n"
+        +"Thank You!",
+
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+    });
+    
 })
+
 
 
 // Register
@@ -206,7 +295,7 @@ app.post('/api/user_update',(req,res)=>{
 })
 
 
-// DELTE //
+// DELETE //
 if(process.env.NODE_ENV === 'production'){
     const path = require('path');
     app.get('/*',(req,res)=>{

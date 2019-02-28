@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const orderSchema = mongoose.Schema({
     orderNo:{
-        type:Number,
+        type:String,
         required:true
     },
     ownerId:{
@@ -10,8 +10,7 @@ const orderSchema = mongoose.Schema({
         required:true
     },
     shopOwnerId:{
-        type:String,
-        required:true
+        type:String
     },
     pickUpDate:{
         type:Date
@@ -56,6 +55,34 @@ const orderSchema = mongoose.Schema({
     },
     totalPrice:{
         type:Number
+    },
+    custEmail:{
+        type:String,
+        require:true,
+        trim:true
+    },
+    firstName:{
+        type:String,
+        maxlength:100
+    },
+    lastName:{
+        type:String,
+        maxlength:100
+    },
+    address1:{
+        type:String
+    },
+    address2:{
+        type:String
+    },
+    city:{
+        type:String
+    },
+    state:{
+        type:String
+    },    
+    zip:{
+        type:String
     }
     /* // Need to revisit for finace part
     total:{}
