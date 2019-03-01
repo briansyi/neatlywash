@@ -17,11 +17,11 @@ export default function(state={},action){
                 reviewer:action.payload.reviewer
             }
         case 'ADD_ORDER':
-            return {...state,neworder:action.payload}
+            return {...state,newOrder:action.payload}
         case 'GET_USERS':
             return {...state,list:action.payload}
-        case 'CLEAR_NEWBOOK':
-            return {...state,newbook:action.payload}
+        case 'CLEAR_NEWORDER':
+            return {...state,newOrder:action.payload}
         case 'UPDATE_ORDER':
             return {
                 ...state,

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 const User = (props) => {
     let user = props.user.login;
@@ -11,6 +12,24 @@ const User = (props) => {
                 <div><span>First Name:</span> {user.firstName}</div>
                 <div><span>Last Name:</span> {user.lastName}</div>
                 <div><span>Email:</span> {user.email}</div>
+            </div>
+            <div> 
+                <Link to={{
+                        pathname:'/login'
+                    }}>
+                    <img alt="My Account" className="imgDashboard" src="/images/Dashboard_My_Account.png" /></Link>
+            </div>
+            <div> 
+                <Link to={{
+                        pathname:'/orders/new-order'
+                    }}>
+                    <img alt="Schedule a Pick Up" className="imgDashboard" src="/images/Dashboard_PickUp.png"/></Link>
+            </div>
+            <div> 
+                <Link to={{
+                        pathname:'/user/user-history'
+                    }}>
+                    <img alt="Order Status" className="imgDashboard" src="/images/Dashboard_Order_Status.png"/></Link>
             </div>
         </div>
     );

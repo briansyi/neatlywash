@@ -65,12 +65,16 @@ const userSchema = mongoose.Schema({
         type:Number,
         default:0
     },
+    lastPickUpDate:{
+        type:Date
+    },
     lastOrderNo:{
         type:String
     },
     token:{
         type:String
     },
+    // This is for shop owner only!
     activated:{
         type:Boolean
     }

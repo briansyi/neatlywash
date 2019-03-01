@@ -10,7 +10,7 @@ class HomeContainer extends Component {
     componentWillMount(){
         console.log(this.props);
         
-        this.props.dispatch(getOrders(1,0,'desc'))
+        this.props.dispatch(getOrders(5,0,'desc'))
     }
 
 
@@ -24,7 +24,7 @@ class HomeContainer extends Component {
 
     loadmore = () => {
         let count = this.props.orders.list.length;
-        this.props.dispatch(getOrders(1,count,'desc',this.props.orders.list))
+        this.props.dispatch(getOrders(5,count,'desc',this.props.orders.list))
     }
 
     render() {
@@ -38,7 +38,7 @@ class HomeContainer extends Component {
             </div>
             <div id="logo_container">
             
-                <img alt="avatar" src="/images/ani_logo.gif"/>
+                <img alt="Neatly Wash Logo" src="/images/ani_logo.gif" className="imgFrontLogo"/>
                {/* {this.renderItems(this.props.orders)}
                <div 
                     className="loadmore"
@@ -50,7 +50,9 @@ class HomeContainer extends Component {
             <br/>
             <div> 
                 <NavLink to={{
-                        pathname:'/'
+                        // Need to update
+                        // pathname:'/user/register'
+                        pathname:'/login'
                     }}>
                     <img alt="Sign Up" src="/images/SignUp.png" style={{width:208,height:53}}/></NavLink>
             </div>

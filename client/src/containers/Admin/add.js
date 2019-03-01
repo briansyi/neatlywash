@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { addOrder, clearNewBook } from '../../actions'
+import { addOrder, clearNewOrder } from '../../actions'
 
 class AddOrder extends Component {
 
@@ -48,7 +48,7 @@ class AddOrder extends Component {
     }
 
     componentWillUnmount(){
-        this.props.dispatch(clearNewBook())
+        this.props.dispatch(clearNewOrder())
     }
 
     render() {

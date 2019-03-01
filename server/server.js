@@ -44,9 +44,8 @@ app.get('/api/auth',auth,(req,res)=>{
         city:req.user.city,
         state:req.user.state,
         zip:req.user.zip,
-        lat:req.user.latitude,
-        long:req.user.longitude,
-        lastOrderNo:req.user.lastOrderNo
+        lastOrderNo:req.user.lastOrderNo,
+        lastPickUpDate:req.user.lastPickUpDate
     })
 })
 
@@ -149,7 +148,7 @@ app.post('/api/order',(req,res)=>{
             orderId:doc._id
         })
     })
-
+/*
     User.find({$and:[
         {zip:req.query.zip},
         {role:1}
@@ -158,7 +157,7 @@ app.post('/api/order',(req,res)=>{
         if (err) throw err;
         console.log(result);
     }) 
-
+*/
     // Added for sending an order to the shop
     var nodemailer = require('nodemailer');
     console.log("We are sending email!");
@@ -174,7 +173,7 @@ app.post('/api/order',(req,res)=>{
     var pickUpDate = moment(req.body.pickUpDate).format('L');
     var mailOptions = {
         from: 'neatlywash.adm@gmail.com',
-        to: req.body.custEmail+";"+result.email,
+        to: req.body.custEmail+";"+req.body.shopEmail,
         subject: 'Here is neatlywash pick up order',
         text: 'Hi, here is the details of your order:\r\n\n'+pickUpDate +"\r\n" + req.body.address1+"\r\n"+req.body.address2+"\r\n"+req.body.city+", "+req.body.state +" "+ req.body.state +"\r\n\r\n"
         +"Thank You!",
@@ -228,7 +227,7 @@ app.post('/api/sendEmailToShopOwner',(req,res)=>{
     var pickUpDate = moment(req.body.pickUpDate).format('L');
     var mailOptions = {
         from: 'neatlywash.adm@gmail.com',
-        to: req.body.custEmail+";"+result.email,
+        to: req.body.custEmail+";"+req.body.shopEmail,
         subject: 'Here is neatlywash pick up order',
         text: 'Hi, here is the details of your order:\r\n\n'+pickUpDate +"\r\n" + req.body.address1+"\r\n"+req.body.address2+"\r\n"+req.body.city+", "+req.body.state +" "+ req.body.state +"\r\n\r\n"
         +"Thank You!",
@@ -244,6 +243,27 @@ app.post('/api/sendEmailToShopOwner',(req,res)=>{
     });
     
 })
+
+// Get Shop Email By Zip
+app.post('/api/getShopEmailByZip',(req,res)=>{
+    const user = new User(req.body);
+
+    User.find({$and:
+        [{zip:req.query.zip},
+            {role:1}
+        ]}).limit(1).exec((err,docs)=>{
+        if(err) return res.status(400).send(err);
+        res.send(docs)
+    })
+})
+
+
+/*    // ORDER = asc || desc
+   Order.find({shopOwnerId:req.query.user}).skip(skip).sort({_id:order}).limit(limit).exec((err,docs)=>{
+    if(err) return res.status(400).send(err);
+    res.send(docs)
+})
+ */
 
 
 

@@ -192,10 +192,9 @@ export function clearShops() {
 }
 
 
-// Maybe later?
-export function clearNewBook() {
+export function clearNewOrder() {
     return {
-        type:'CLEAR_NEWBOOK',
+        type:'CLEAR_NEWORDER',
         payload:{}
     }
 }

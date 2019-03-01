@@ -20,7 +20,7 @@ const SidenavItems = ({user}) => {
             type:'navItem',
             icon:'file-text-o',
             text:'About Us',
-            link:'/',
+            link:'/aboutus',
             role:0,
             restricted:true
         },
@@ -29,7 +29,7 @@ const SidenavItems = ({user}) => {
             type:'navItem',
             icon:'file-text-o',
             text:'Contact Us',
-            link:'/',
+            link:'/contacus',
             role:0,
             restricted:true
         },
@@ -38,7 +38,16 @@ const SidenavItems = ({user}) => {
             type:'navItem',
             icon:'file-text-o',
             text:'FAQ',
-            link:'/',
+            link:'/faq',
+            role:0,
+            restricted:true
+        },
+        // Services
+        {
+            type:'navItem',
+            icon:'file-text-o',
+            text:'Services',
+            link:'/services',
             role:0,
             restricted:true
         },
@@ -48,7 +57,7 @@ const SidenavItems = ({user}) => {
             icon:'file-text-o',
             text:'Today\'s Pickups',
             link:'/',
-            role:0,
+            role:1,
             restricted:true
         },
         {
@@ -65,7 +74,7 @@ const SidenavItems = ({user}) => {
             icon:'file-text-o',
             text:'Add Shop',
             link:'/shopRegister',
-            role:0,
+            role:2,
             restricted:true
         },
         {
@@ -100,14 +109,14 @@ const SidenavItems = ({user}) => {
             role:0,
             restricted:true
         },
-        {
-            type:'navItem',
-            icon:'file-text-o',
-            text:'Shop List',
-            link:'/user/shop-list',
-            role:0,
-            restricted:true
-        },
+        // {
+        //     type:'navItem',
+        //     icon:'file-text-o',
+        //     text:'Shop List',
+        //     link:'/user/shop-list',
+        //     role:0,
+        //     restricted:true
+        // },
         {
             type:'navItem',
             icon:'file-text-o',
@@ -131,8 +140,7 @@ const SidenavItems = ({user}) => {
         user.login ?
             items.map((item,i)=>{
                 if(user.login.isAuth) {
-                    console.log("Hi_1.5");
-                    console.log(user.login.role);
+                    console.log("Checking login role: "+user.login.role);
                     return !item.exclude ?
                         element(item,i)
                     :null

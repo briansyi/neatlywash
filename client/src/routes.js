@@ -18,6 +18,12 @@ import Confirm from './components/Orders/confirm';
 
 import ShopMapList from './components/Shops/shopMapList'
 
+// Newly Added
+import AboutUs from './components/Home/about';
+import ContactUs from './components/Home/contact';
+import FAQ from './components/Home/faq';
+import Services from './components/Home/services';
+
 import Layout from './hoc/layout';
 import Auth from './hoc/auth';
 // <Route path="/orders/new-order" exact component={Auth(NewOrder,true)}/>
@@ -40,6 +46,11 @@ const Routes = () => {
                 <Route path="/orders/confirm" exact component={Auth(Confirm,true)}/>
                 <Route path="/orders/:id" exact component={Auth(OrderView,true)}/>
                 <Route path="/user/user-reviews" exact component={Auth(UserPosts,true)}/>
+                {/* newly added */}
+                <Route path="/aboutus" exact component={Auth(AboutUs,true)}/>
+                <Route path="/contactus" exact component={Auth(ContactUs,true)}/>
+                <Route path="/faq" exact component={Auth(FAQ,true)}/>
+                <Route path="/services" exact component={Auth(Services,true)}/>
             </Switch>
         </Layout>
     );

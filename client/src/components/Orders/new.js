@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import moment from 'moment';
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Popup from "reactjs-popup";
-import { addOrder } from '../../actions'
+import { addOrder, clearNewOrder } from '../../actions'
 import addDays from "date-fns/add_days";
 
 import '../../../node_modules/react-datepicker/dist/react-datepicker.css'
+import { isNullOrUndefined } from 'util';
 
 class AddOrder extends Component {
     // constructor(props) {
@@ -34,8 +35,25 @@ class AddOrder extends Component {
             city:this.props.user.login.city,
             state:this.props.user.login.state,
             zip:this.props.user.login.zip,
-            custEmail:this.props.user.login.email
-        }
+            custEmail:this.props.user.login.email,
+            shopEmail:''
+        },
+        shopInfo:[]
+    }
+
+    componentDidMount() {
+        axios.post(`/api/getShopEmailByZip?zip=${this.props.user.login.zip}`)
+        .then(res => {
+            const shopEmailFromDB = res.data;
+            console.log(shopEmailFromDB); 
+            this.setState({shopInfo:shopEmailFromDB}) 
+        })
+        .catch(error =>{
+            console.log(error);
+        })
+    }
+    componentWillUnmount() {
+        this.props.dispatch(clearNewOrder())
     }
 
     handleChangePickUpDate = (date) => {
@@ -61,39 +79,45 @@ class AddOrder extends Component {
                 alternation: !this.state.formdata.alternation
             }
         }))
-        this.props.user.lastOrderNo = this.state.formdata.orderNo
     }
 
     handleInput = (event,name) => {
         const newFormdata = {
             ...this.state.formdata
         }
-        //newFormdata[name] = event.target.value
 
         this.setState({
             formdata:newFormdata
         })
     }
 
+/*     showNewOrder = (order) =>{
+        order.post ?
+            <div className="conf_link">
+                Confirmed !! < NavLink to={`/orders/${order.orderId}`}>
+                    Click the link to see the post
+                </NavLink>
+            </div>
+        :null
+    } */
+
     submitForm = (e) => {
         e.preventDefault();
         console.log("Submit Form!")
         console.log(this.state.formdata)
         console.log(this.props)
-        this.props.user.lastOrderNo = this.state.formdata.orderNo;
-         this.props.dispatch(addOrder({
+        this.props.user.lastOrderNo = this.state.formdata.orderNo
+        this.props.user.lastPickUpDate = this.state.formdata.pickUpDate
+        
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                shopEmail: this.state.shopInfo[0].email
+            }
+        }))
+        this.props.dispatch(addOrder({
             ...this.state.formdata
         }))
-
-        //this.state.formdata.
-/*         this.props.dispatch(addOrder({
-            ...this.state.formdata,
-            ownerId:this.props.user.login.id
-        })) */
-    }
-     
-    sendEmailToShop = () => {
-        this.props.dispatch(getOrderWithUser(this.props.user.login.id,1,count,'desc',this.props.orders.list))
     }
 
     render() {
@@ -149,12 +173,12 @@ class AddOrder extends Component {
                         </h4>
                     </div>
                     <div>
-                    <Popup trigger={<button type="button">Place a Pick Up!</button>} position="top center">
+                    <Popup trigger={<button type="button">Place a Pick Up!</button>} modal>
                     {close =>(
                         <div className="fixWidth">
+                        <br/>
                             <div>Confirm your pick up</div><br/>
                             <div>
-                                
                                 Pick Up Address:
                                 <br/>
                                 {this.state.formdata.firstName} {this.state.formdata.lastname}
@@ -163,35 +187,30 @@ class AddOrder extends Component {
                                 <br/>
                                 {this.state.formdata.city}, {this.state.formdata.state} {this.state.formdata.zip}
                                 <br/>
+                                <br/>
                             </div>
-                            <button type="submit">Confirm</button>
-{/*                             <NavLink to={{ pathname:'/orders/confirm'}}>
-                                <button type="submit">Confirm</button>
-                            </NavLink> */}
+                            <Popup trigger={<button type="submit">Confirm</button>} position="top center" modal>
+                                {close =>(
+                                    <div>
+                                    {
+                                        this.props.orders.newOrder ?
+                                        <Link to={{
+                                            pathname:'/orders/confirm'
+                                        }}>
+                                        <button type="button">Pick Up Confirmed!</button>
+                                        </Link>
+                                        :null
+                                    }
+                                    </div>
+                                )}
+                            </Popup>
                             <button type="button" onClick={() => {close()}}>Cancel</button>
+                                <br/>
+                                <br/>
                         </div>
                     )}
                     </Popup>
                     </div>
-                    {/* <h3>Pick up instruction</h3>
-                    <textarea
-                        //value={this.state.formdata.notesFromCust}
-                        // onChange={(event)=>this.handleInput(event,'notesFromCust')}
-                    /> */}
-                    <NavLink to={{
-                        pathname:'/orders/confirm'
-                    }}>
-
-                    <button onClick={this.onLogout}>Place a Pick Up!</button></NavLink>
-                    {
-                        
-                        /* <button type="submit">New Order</button>
-                    {
-                        this.props.history.push("/")
-                        // this.props.orders.neworder ? 
-                        //     this.showNewBook(this.props.orders.neworder)
-                        // :null
-                    } */}
                 </form>
             </div>
         );
@@ -200,6 +219,7 @@ class AddOrder extends Component {
 
 
 function mapStateToProps(state){
+    console.log(state)
     return {
         orders:state.orders,
         user: state.user

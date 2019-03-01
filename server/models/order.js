@@ -60,6 +60,10 @@ const orderSchema = mongoose.Schema({
         type:String,
         require:true,
         trim:true
+    },shopEmail:{
+        type:String,
+        require:true,
+        trim:true
     },
     firstName:{
         type:String,

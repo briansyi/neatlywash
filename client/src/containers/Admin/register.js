@@ -5,9 +5,15 @@ import { getUsers, userRegister } from '../../actions';
 class Register extends PureComponent {
 
     state ={
-        name:'',
-        lastname:'',
+        firstName:'',
+        lastName:'',
         email:'',
+        address1:'',
+        address2:'',
+        city:'',
+        state:'',
+        zip:'',
+        role:0,
         password:'',
         error:''
     }
@@ -23,11 +29,11 @@ class Register extends PureComponent {
     handleInputPassword= (event) => {
         this.setState({password:event.target.value})
     } 
-    handleInputName = (event) => {
-        this.setState({name:event.target.value})
+    handleInputFirstName = (event) => {
+        this.setState({firstName:event.target.value})
     } 
     handleInputLastname = (event) => {
-        this.setState({lastname:event.target.value})
+        this.setState({lastName:event.target.value})
     } 
 
     componentWillReceiveProps(nextProps){
@@ -35,9 +41,15 @@ class Register extends PureComponent {
             this.setState({error:'Error,try again'})
         } else{
             this.setState({
-                name:'',
-                lastname:'',
+                firstName:'',
+                lastName:'',
                 email:'',
+                address1:'',
+                address2:'',
+                city:'',
+                state:'',
+                zip:'',
+                role:0,
                 password:''
             })
         }
@@ -50,8 +62,13 @@ class Register extends PureComponent {
         this.props.dispatch(userRegister({
             email:this.state.email,
             password:this.state.password,
-            name:this.state.name,
-            lastname:this.state.lastname
+            firstName:this.state.firstName,
+            lastName:this.state.lastName,
+            address1:this.state.address1,
+            address2:this.state.address2,
+            city:this.state.city,
+            state:this.state.state,
+            zip:this.state.zip
         },this.props.user.users))
         
     }
@@ -60,8 +77,8 @@ class Register extends PureComponent {
         user.users ? 
             user.users.map(item => (
                 <tr key={item._id}>
-                    <td>{item.name}</td>
-                    <td>{item.lastname}</td>
+                    <td>{item.firstName}</td>
+                    <td>{item.lastName}</td>
                     <td>{item.email}</td>
                 </tr>
             ))
@@ -79,17 +96,17 @@ class Register extends PureComponent {
                     <div className="form_element">
                         <input
                             type="text"
-                            placeholder="Enter name"
-                            value={this.state.name}
-                            onChange={this.handleInputName}
+                            placeholder="Enter First Name"
+                            value={this.state.firstName}
+                            onChange={this.handleInputFirstName}
                          />
                     </div>
 
                     <div className="form_element">
                         <input
                             type="text"
-                            placeholder="Enter Lastname"
-                            value={this.state.lastname}
+                            placeholder="Enter Last Name"
+                            value={this.state.lastName}
                             onChange={this.handleInputLastname}
                          />
                     </div>
@@ -112,6 +129,47 @@ class Register extends PureComponent {
                          />
                     </div>
 
+                    <div className="form_element">
+                        <input
+                            type="adress1"
+                            placeholder="Enter Address1"
+                            value={this.state.password}
+                            onChange={this.handleInputPassword}
+                         />
+                    </div>
+                    <div className="form_element">
+                        <input
+                            type="address2"
+                            placeholder="Enter Address2"
+                            value={this.state.password}
+                            onChange={this.handleInputPassword}
+                         />
+                    </div>
+                    <div className="form_element">
+                        <input
+                            type="city"
+                            placeholder="Enter City"
+                            value={this.state.password}
+                            onChange={this.handleInputPassword}
+                         />
+                    </div>
+                    <div className="form_element">
+                        <input
+                            type="state"
+                            placeholder="Enter State"
+                            value={this.state.password}
+                            onChange={this.handleInputPassword}
+                         />
+                    </div>
+                    <div className="form_element">
+                        <input
+                            type="zip"
+                            placeholder="Enter Zip"
+                            value={this.state.password}
+                            onChange={this.handleInputPassword}
+                         />
+                    </div>
+
                     <button type="submit">Add user</button>
                     <div className="error">
                         {this.state.error}
@@ -123,8 +181,8 @@ class Register extends PureComponent {
                     <table>
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Lastname</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
                                 <th>Email</th>
                             </tr>
                         </thead>

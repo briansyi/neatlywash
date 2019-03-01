@@ -461,9 +461,33 @@ header .navItem span {
     /*color: #fff;*/
     font-weight:300;
 }
-img{
+.img{
     width: 100%;
     object-fit: contain;
+}
+.imgOrderCompleted{
+    width: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    text-align:center;
+}
+.imgFrontLogo{
+    width: 85%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    text-align:center;    
+}
+.imgDashboard{
+    width: 90%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    text-align:center;    
 }
 @-webkit-keyframes load2 {
   0% {
