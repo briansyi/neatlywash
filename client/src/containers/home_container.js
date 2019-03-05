@@ -54,14 +54,17 @@ class HomeContainer extends Component {
                         // pathname:'/user/register'
                         pathname:'/login'
                     }}>
-                    <img alt="Sign Up" src="/images/SignUp.png" style={{width:208,height:53}}/></NavLink>
+                    <img alt="Sign Up" src="/images/SignUp.png" className="imgFrontBtn"/>
+
+                    {/* <img alt="Sign Up" src="/images/SignUp.png" style={{width:208,height:53}}/> */}
+                </NavLink>
             </div>
-            <br/>
             <div> 
                 <NavLink to={{
                         pathname:'/login'
                     }}>
-                    <img alt="Log In" src="/images/LogIn.png"  style={{width:208,height:53}}/></NavLink>
+                    <img alt="Log In" src="/images/LogIn.png" className="imgFrontBtn"/>
+                    </NavLink>
             </div>
             </center>
             

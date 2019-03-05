@@ -5,14 +5,18 @@ const User = (props) => {
     let user = props.user.login;
     return (
         <div className="user_container">
-            <div className="avatar">
+{/*             <div className="avatar">
                 <img alt="avatar" src="/images/avatar.png"/>
+            </div> */}
+            <br/>
+            <div className="rl_container">
+                <h2>Welcome Back {user.firstName} {user.lastName}!</h2>
             </div>
-            <div className="nfo">
+{/*             <div className="nfo">
                 <div><span>First Name:</span> {user.firstName}</div>
                 <div><span>Last Name:</span> {user.lastName}</div>
                 <div><span>Email:</span> {user.email}</div>
-            </div>
+            </div> */}
             <div> 
                 <Link to={{
                         pathname:'/login'

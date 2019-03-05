@@ -63,7 +63,14 @@ class AddOrder extends Component {
                 pickUpDate: date
             }
         }))
+        this.setState(prevState => ({ 
+            formdata: {
+                ...prevState.formdata,
+                proDeliveryDate: moment(date).add(3, 'day')
+            }
+        }))
     }
+
     handleChangeDeliveryDate = (date) => {
         this.setState(prevState => ({
             formdata: {
@@ -108,7 +115,6 @@ class AddOrder extends Component {
         console.log(this.props)
         this.props.user.lastOrderNo = this.state.formdata.orderNo
         this.props.user.lastPickUpDate = this.state.formdata.pickUpDate
-        
         this.setState(prevState => ({
             formdata: {
                 ...prevState.formdata,

@@ -481,12 +481,20 @@ header .navItem span {
     padding: 20px;
     text-align:center;    
 }
-.imgDashboard{
-    width: 90%;
+.imgFrontBtn{
+    width: 50%;
     display: block;
     margin-left: auto;
     margin-right: auto;
     padding: 20px;
+    text-align:center;    
+}
+.imgDashboard{
+    width: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
     text-align:center;    
 }
 @-webkit-keyframes load2 {

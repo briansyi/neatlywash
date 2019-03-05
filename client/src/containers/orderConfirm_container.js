@@ -4,11 +4,6 @@ import moment from 'moment';
 
 
 class OrderConfirmContainer extends Component {
-
-    componentWillMount(){
-        console.log(this.props);
-    }
-
     render() {
         return (
             <div className="imgOrderCompleted">
@@ -25,6 +20,7 @@ class OrderConfirmContainer extends Component {
 }
 
 function mapStateToProps(state){
+    console.log(state)
     return {
         order:state
     }

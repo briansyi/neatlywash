@@ -1,25 +1,43 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
 import OrderConfirmContainer from '../../containers/orderConfirm_container';
 
-const OrderConfirm = (props) => {
-    return (
-        
-        <div  className="rl_container">
-            <div>
-            <br/>
-                <img className="imgOrderCompleted" alt="Order Completed" src="/images/Order_Complete.png"/>
+
+class OrderConfirm extends Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    onDone(){
+        this.props.history.push('/user');
+    }
+
+
+    render () {
+        return (
+            <div  className="rl_container">
+                <div>
+                    <br/>
+                    <img className="imgOrderCompleted" alt="Order Completed" src="/images/Order_Complete.png"/>
+                </div>
+                <br/>
+                <OrderConfirmContainer/>
+                <Link to={{
+                    pathname:'/user'
+                }}>
+                <button onClick={this.onDone}>Done</button>
+                </Link>
             </div>
-            <br/>
-            <OrderConfirmContainer/>
-            <Link to={{
-            pathname:'/user'
-            }}>
-            <button type="button">Done</button>
-            </Link>
-        </div>
       
-    );
+        );
+    }
 }
 
-export default OrderConfirm;
+function mapStateToProps(state){
+    return{
+        user: state.user
+    }
+  }
+export default connect(mapStateToProps)(OrderConfirm);
