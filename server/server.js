@@ -28,7 +28,7 @@ app.get('/api/getOrder',(req,res)=>{
         if(err) return res.status(400).send(err);
         res.send(doc)
     })
-
+    console.log(doc);
 })
 
 // Auth

@@ -10,10 +10,7 @@ class OrderConfirm extends Component {
         super(props);
     }
 
-    onDone(){
-        this.props.history.push('/user');
-    }
-
+ 
 
     render () {
         return (
@@ -27,7 +24,7 @@ class OrderConfirm extends Component {
                 <Link to={{
                     pathname:'/user'
                 }}>
-                <button onClick={this.onDone}>Done</button>
+                <button type='button'>Done</button>
                 </Link>
             </div>
       

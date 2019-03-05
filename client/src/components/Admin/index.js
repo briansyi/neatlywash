@@ -10,7 +10,7 @@ const User = (props) => {
             </div> */}
             <br/>
             <div className="rl_container">
-                <h2>Welcome Back {user.firstName} {user.lastName}!</h2>
+                <h2>Welcome Back, {user.firstName} {user.lastName}!</h2>
             </div>
 {/*             <div className="nfo">
                 <div><span>First Name:</span> {user.firstName}</div>

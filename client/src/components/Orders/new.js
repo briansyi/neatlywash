@@ -9,7 +9,6 @@ import { addOrder, clearNewOrder } from '../../actions'
 import addDays from "date-fns/add_days";
 
 import '../../../node_modules/react-datepicker/dist/react-datepicker.css'
-import { isNullOrUndefined } from 'util';
 
 class AddOrder extends Component {
     // constructor(props) {
@@ -111,16 +110,17 @@ class AddOrder extends Component {
     submitForm = (e) => {
         e.preventDefault();
         console.log("Submit Form!")
-        console.log(this.state.formdata)
         console.log(this.props)
         this.props.user.lastOrderNo = this.state.formdata.orderNo
         this.props.user.lastPickUpDate = this.state.formdata.pickUpDate
+        let tmpShopEmail = this.state.shopInfo[0].email
         this.setState(prevState => ({
             formdata: {
                 ...prevState.formdata,
-                shopEmail: this.state.shopInfo[0].email
+                shopEmail: tmpShopEmail
             }
         }))
+
         this.props.dispatch(addOrder({
             ...this.state.formdata
         }))
@@ -197,7 +197,7 @@ class AddOrder extends Component {
                             </div>
                             <Popup trigger={<button type="submit">Confirm</button>} position="top center" modal>
                                 {close =>(
-                                    <div>
+                                    <div className="fixWidthModal">
                                     {
                                         this.props.orders.newOrder ?
                                         <Link to={{

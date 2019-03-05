@@ -461,6 +461,19 @@ header .navItem span {
     /*color: #fff;*/
     font-weight:300;
 }
+.fixWidthModal button {
+    text-align:center !important; 
+    width: 80% !important;
+    padding: 20px !important;
+    margin-top: 10px !important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+    margin-bottom: 10px !important;
+    /*background: none !important;*/
+    font-size: 30px;
+    /*color: #fff;*/
+    font-weight:300;
+}
 .img{
     width: 100%;
     object-fit: contain;

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 const SidenavItems = ({user}) => {
 
     const items = [
-        // role: 0 = reg. customer; 1 = shop owner; 2 = admin.
+        // role: 0 = reg. customer; 1 = shop owner; 2 = admin.; 99 = disabled
         {
             type:'navItem',
             icon:'home',

@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import { getOrder, updateOrder, clearOrder, deleteOrder } from '../../actions'
 
 class EditOrder extends PureComponent {
@@ -9,24 +10,59 @@ class EditOrder extends PureComponent {
         formdata:{
             _id:this.props.match.params.id,
             orderNo:'',
-            author:'',
-            review:'',
-            deliveredDate:'',
-            rating:'',
-            totalPrice:''
+            ownerId:'',
+            shopOwnerId:'',
+            pickUpDate:'',
+            orderStatus:'',//o:open, c:completed
+            notesFromCust:'',
+            pickUpDate:'',
+            proDeliveryDate:'',
+            alternation: false,
+            totalPrice:'',
+            firstName:'',
+            lastname:'',
+            address1:'',
+            address2:'',
+            city:'',
+            state:'',
+            zip:'',
+            custEmail:'',
+            shopEmail:'',
+            notesFromShop:''
         }
     }
 
+    handleChangePickUpDate = (date) => {
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                pickUpDate: date
+            }
+        }))
+        this.setState(prevState => ({ 
+            formdata: {
+                ...prevState.formdata,
+                proDeliveryDate: moment(date).add(3, 'day')
+            }
+        }))
+    }
 
-    handleInput = (event,orderNo) => {
-        const newFormdata = {
-            ...this.state.formdata
-        }
-        newFormdata[orderNo] = event.target.value
-
-        this.setState({
-            formdata:newFormdata
-        })
+    handleChangeDeliveryDate = (date) => {
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                proDeliveryDate: date
+            }
+        }))
+    }
+    
+    handleCheckBox = (e) => {
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                alternation: !this.state.formdata.alternation
+            }
+        }))
     }
 
 
@@ -51,15 +87,30 @@ class EditOrder extends PureComponent {
 
     componentWillReceiveProps(nextProps){
         let order = nextProps.orders.order;
+        console.log("Here is order:\n"+ order);
         this.setState({
             formdata:{
                 _id:order._id,
                 orderNo:order.orderNo,
+                ownerId:order.ownerId,
+                shopOwnerId:order.shopOwnerId,
                 pickUpDate:order.pickUpDate,
+                orderStatus:order.orderStatus,//o:open, c:completed
                 notesFromCust:order.notesFromCust,
-                deliveredDate:order.deliveredDate,
-                orderStatus:order.orderStatus,
-                totalPrice:order.totalPrice
+                pickUpDate:order.pickUpDate,
+                proDeliveryDate:order.proDeliveryDate,
+                alternation:order.alternation,
+                totalPrice:order.totalPrice,
+                firstName:order.firstName,
+                lastname:order.lastname,
+                address1:order.address1,
+                address2:order.address2,
+                city:order.city,
+                state:order.state,
+                zip:order.zip,
+                custEmail:order.custEmail,
+                shopEmail:order.shopEmail,
+                notesFromShop:order.notesFromShop
             }
         })
     }
@@ -70,6 +121,7 @@ class EditOrder extends PureComponent {
 
     render() {
         let orders = this.props.orders;
+        console.log("I am in edit??!!\n"+this.props);
         return (
             <div className="rl_container article">
                 {
