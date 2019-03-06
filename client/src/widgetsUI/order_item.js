@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const OrderItem = (item) => {
     return (
-        <Link to={`/orders/${item._id}`} className="order_item">
+        <Link to={`/orders/edit-order/${item._id}`} className="order_item">
             <div className="order_header">
                 <strong>Order Number: </strong>
                 <h2>{item.orderNo}</h2>

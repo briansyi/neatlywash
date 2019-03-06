@@ -3,6 +3,7 @@ export default function(state={},action){
         case 'GET_ORDERS':
             return { ...state,list:action.payload }
         case 'GET_ORDER':
+        console.log("GET_ORDER\n"+action.payload)
             return {...state,order:action.payload}
         case 'GET_BOOK_W_USER':
             return {
@@ -25,7 +26,7 @@ export default function(state={},action){
         case 'UPDATE_ORDER':
             return {
                 ...state,
-                updateBook:action.payload.success,
+                updateOrder:action.payload.success,
                 book:action.payload.doc
             }
         case 'DELETE_ORDER':

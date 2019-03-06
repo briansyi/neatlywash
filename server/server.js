@@ -26,9 +26,10 @@ app.get('/api/getOrder',(req,res)=>{
 
     Order.findById(id,(err,doc)=>{
         if(err) return res.status(400).send(err);
+        console.log(doc);
         res.send(doc)
     })
-    console.log(doc);
+    //console.log(doc);
 })
 
 // Auth
@@ -45,7 +46,8 @@ app.get('/api/auth',auth,(req,res)=>{
         state:req.user.state,
         zip:req.user.zip,
         lastOrderNo:req.user.lastOrderNo,
-        lastPickUpDate:req.user.lastPickUpDate
+        lastPickUpDate:req.user.lastPickUpDate,
+        role:req.user.role
     })
 })
 
@@ -148,16 +150,7 @@ app.post('/api/order',(req,res)=>{
             orderId:doc._id
         })
     })
-/*
-    User.find({$and:[
-        {zip:req.query.zip},
-        {role:1}
-        ]}
-        ).toArray(function(err, result) {
-        if (err) throw err;
-        console.log(result);
-    }) 
-*/
+
     // Added for sending an order to the shop
     var nodemailer = require('nodemailer');
     console.log("We are sending email!");
@@ -189,6 +182,53 @@ app.post('/api/order',(req,res)=>{
     });
     
 })
+
+// Update an order
+app.post('/api/order_update',(req,res)=>{
+    Order.findByIdAndUpdate(req.body_id, req.body, {new:true},(err,doc)=>{
+        if(err) return res.status(400).send(err);
+        res.json({
+            success:true,
+            doc
+        })
+    })
+
+    // Added for sending an order to the shop
+    var nodemailer = require('nodemailer');
+    console.log("We are sending email!");
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'neatlywash.adm@gmail.com',
+            pass: 'superDuper00'
+        }
+    });
+
+    var contents ="";
+    var moment = require('moment');
+    var pickUpDate = moment(req.body.pickUpDate).format('L');
+    if (req.body.orderStatus == "i") contents ="The order was cancelled by the user."
+    else if (req.body.orderStatus == "p") contents ="The order is currenlty processing."
+    else contents ="The pick up schedule was changed by the user:\r\n"+"New date for pick up is:\r\n"+ pickUpDate;
+    var mailOptions = {
+        from: 'neatlywash.adm@gmail.com',
+        to: req.body.custEmail+";"+req.body.shopEmail,
+        subject: 'Neatly Wash Order Status Changes',
+        text: 'Hi, here is the details of your order:\r\n\n'+contents+"\r\n\n"
+        +"Thank You!",
+
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+    });
+})
+
+
 
 app.post('/api/sendEmailToShopOwner',(req,res)=>{
     console.log(req.body);

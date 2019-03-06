@@ -135,6 +135,7 @@ export function clearOrderWithUser(){
 // Place new order
 export function addOrder(order){
     console.log("Add an order!");
+    console.log(order);
     const request = axios.post('/api/order',order)
         .then(response => response.data);
 
@@ -203,7 +204,6 @@ export function clearNewOrder() {
 export function getUserPosts(userId){
     const request = axios.get(`/api/user_posts?user=${userId}`)
                     .then(response => response.data)
-
     return {
         type:'GET_USER_POSTS',
         payload:request
@@ -214,14 +214,14 @@ export function getUserPosts(userId){
 export function getOrder(id){
     const request = axios.get(`/api/getOrder?id=${id}`)
                     .then(response => response.data);
-
+    //console.log(response.data)
     return {
         type:'GET_ORDER',
         payload:request
     }
 }
 
-// Not now
+// Finished
 export function updateOrder(data){
     const request = axios.post(`/api/order_update`,data)
                 .then(response => response.data);

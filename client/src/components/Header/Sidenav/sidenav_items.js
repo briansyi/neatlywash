@@ -51,6 +51,15 @@ const SidenavItems = ({user}) => {
             role:0,
             restricted:true
         },
+        // Create a pick up
+        {
+            type:'navItem',
+            icon:'file-text-o',
+            text:'Create An Pick Up',
+            link:'/orders/new-order',
+            role:0,
+            restricted:true
+        },
         // Today's Pick-ups
         {
             type:'navItem',
@@ -101,14 +110,6 @@ const SidenavItems = ({user}) => {
             role:0,
             restricted:true
         },
-        {
-            type:'navItem',
-            icon:'file-text-o',
-            text:'Create An Order',
-            link:'/orders/new-order',
-            role:0,
-            restricted:true
-        },
         // {
         //     type:'navItem',
         //     icon:'file-text-o',
@@ -136,16 +137,39 @@ const SidenavItems = ({user}) => {
         </div>
     )
 
-    const showItems = () => (
+/*     const showItems = () => (
         user.login ?
             items.map((item,i)=>{
                 if(user.login.isAuth) {
-                    console.log("Checking login role: "+user.login.role);
                     return !item.exclude ?
                         element(item,i)
                     :null
                 } else {
-                    console.log("Hi");
+                    return !item.restricted ? //&& (item.role <= user.login.role) ?
+                        element(item,i)
+                    :null
+                }
+            })
+        :null
+    ) */
+
+    const showItems = () => (
+        user.login ?
+            items.map((item,i)=>{
+                if(user.login.isAuth) {
+                    if(item.role <= user.login.role) {
+                        console.log(user.login);
+                        return !item.exclude ?
+                            element(item,i)
+                        :null
+                    } else {
+                        console.log("What about here??");
+                        /*
+                        return !item.exclude ?
+                            element(item,i)
+                        :null*/
+                    }
+                } else {
                     return !item.restricted ? //&& (item.role <= user.login.role) ?
                         element(item,i)
                     :null
@@ -154,27 +178,29 @@ const SidenavItems = ({user}) => {
         :null
     )
 
-    // const showItems = () => (
-    //     console.log(typeof(user.login)),
-    //     items.map((item,i)=>{
-    //         if(typeof(user.login) ==! undefined) {
-    //             console.log("I am here222");
-    //             console.log(user);
-    //             if(user.login.isAuth) {
-    //                 return !item.exclude ? element(item,i)
-    //                 :null
-    //             } else {
-    //                 return !item.restricted ? element(item,i)
-    //                 :null
-    //             }
-    //         } else {
-    //             console.log("I am here333");
-    //             console.log(user);
-    //             return !item.restricted ? element(item,i)
-    //             :null
-    //         }
-    //     })
-    // )
+
+
+/*     const showItems = () => (
+        console.log(typeof(user.login)),
+        items.map((item,i)=>{
+            if(typeof(user.login) ==! undefined) {
+                console.log("I am here222");
+                console.log(user);
+                if(user.login.isAuth) {
+                    return !item.exclude ? element(item,i)
+                    :null
+                } else {
+                    return !item.restricted ? element(item,i)
+                    :null
+                }
+            } else {
+                console.log("I am here333");
+                console.log(user);
+                return !item.restricted ? element(item,i)
+                :null
+            }
+        })
+    ) */
 
     return (
         <div>
