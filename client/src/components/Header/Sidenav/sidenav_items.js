@@ -65,7 +65,7 @@ const SidenavItems = ({user}) => {
             type:'navItem',
             icon:'file-text-o',
             text:'Today\'s Pickups',
-            link:'/',
+            link:'/user/todays-pickups',
             role:1,
             restricted:true
         },

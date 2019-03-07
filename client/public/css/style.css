@@ -510,6 +510,13 @@ header .navItem span {
     padding: 5px;
     text-align:center;    
 }
+.imgServicesLogo{
+    width: 35%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    text-align:center;    
+}
 @-webkit-keyframes load2 {
   0% {
     -webkit-transform: rotate(0deg);

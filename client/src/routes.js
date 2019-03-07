@@ -53,6 +53,8 @@ const Routes = () => {
                 <Route path="/faq" exact component={Auth(FAQ,true)}/>
                 <Route path="/services" exact component={Auth(Services,true)}/>
                 <Route path="/user/edit-pickup/:id" exact component={Auth(EditPickUp,true)}/>
+                {/* <Route path="/user/todays-pickups" exact component={Auth(TodaysPickUp,true)}/> */}
+                
             </Switch>
         </Layout>
     );
