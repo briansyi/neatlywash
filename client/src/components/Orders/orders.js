@@ -4,7 +4,12 @@ import OrderHistoryContainer from '../../containers/orderHistory_container';
 const OrderHistory = (props) => {
     return (
         <div>
-            <OrderHistoryContainer/>
+            <div>
+                <img className="imgOrderHistory" alt="Order History" src="/images/Order_History.png"/>
+            </div>
+            <div>
+                <OrderHistoryContainer/>
+            </div>
         </div>
     );
 };

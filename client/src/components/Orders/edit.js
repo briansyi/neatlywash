@@ -9,6 +9,7 @@ import addDays from "date-fns/add_days";
 
 import '../../../node_modules/react-datepicker/dist/react-datepicker.css'
 
+
 class EditOrder extends PureComponent {
 
     state = {
@@ -181,6 +182,21 @@ class EditOrder extends PureComponent {
                             </label>
                         </h4>
                     </div>
+                    <hr/>
+                    <div>
+                        <h3>The invoice:</h3>
+                        {new Intl.NumberFormat('en-US', {
+                            style: 'currency',
+                            currency:'USD',
+                            minimumFractionDigits:2
+                        }).format(this.state.formdata.totalPrice)}
+                    </div>
+                    <hr/>
+                    <div>
+                        <h3>Notes from the shop</h3>
+                        {this.state.formdata.notesFromShop}
+                    </div>
+                    <hr/>
                     <div>
                     <Popup trigger={<button type="button">Save the changes</button>} modal>
                     {close =>(

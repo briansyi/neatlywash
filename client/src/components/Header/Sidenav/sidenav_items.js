@@ -15,42 +15,6 @@ const SidenavItems = ({user}) => {
             role:0,
             restricted:false
         },
-        // About Us
-        {
-            type:'navItem',
-            icon:'file-text-o',
-            text:'About Us',
-            link:'/aboutus',
-            role:0,
-            restricted:true
-        },
-        // Contact Us
-        {
-            type:'navItem',
-            icon:'file-text-o',
-            text:'Contact Us',
-            link:'/contacus',
-            role:0,
-            restricted:true
-        },
-        // FAQ
-        {
-            type:'navItem',
-            icon:'file-text-o',
-            text:'FAQ',
-            link:'/faq',
-            role:0,
-            restricted:true
-        },
-        // Services
-        {
-            type:'navItem',
-            icon:'file-text-o',
-            text:'Services',
-            link:'/services',
-            role:0,
-            restricted:true
-        },
         // Create a pick up
         {
             type:'navItem',
@@ -107,6 +71,42 @@ const SidenavItems = ({user}) => {
             icon:'file-text-o',
             text:'Order History',
             link:'/user/user-history',
+            role:0,
+            restricted:true
+        },
+        // Services
+        {
+            type:'navItem',
+            icon:'file-text-o',
+            text:'Services',
+            link:'/services',
+            role:0,
+            restricted:true
+        },
+        // About Us
+        {
+            type:'navItem',
+            icon:'file-text-o',
+            text:'About Us',
+            link:'/aboutus',
+            role:0,
+            restricted:true
+        },
+        // FAQ
+        {
+            type:'navItem',
+            icon:'file-text-o',
+            text:'FAQ',
+            link:'/faq',
+            role:0,
+            restricted:true
+        },
+        // Contact Us
+        {
+            type:'navItem',
+            icon:'file-text-o',
+            text:'Contact Us',
+            link:'/contactus',
             role:0,
             restricted:true
         },

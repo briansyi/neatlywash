@@ -221,6 +221,9 @@ header .navItem span {
     box-sizing: border-box;
     display: inline-block;
 }
+.rl_container.article_contact {
+    padding: 10px;
+}
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: #d8d8d8;
@@ -480,6 +483,14 @@ header .navItem span {
 }
 .imgOrderCompleted{
     width: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    text-align:center;
+}
+.imgOrderHistory{
+    width: 40%;
     display: block;
     margin-left: auto;
     margin-right: auto;

@@ -14,7 +14,7 @@ class OrderConfirm extends Component {
 
     render () {
         return (
-            <div  className="rl_container">
+            <div className="rl_container">
                 <div>
                     <br/>
                     <img className="imgOrderCompleted" alt="Order Completed" src="/images/Order_Complete.png"/>

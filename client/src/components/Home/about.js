@@ -3,9 +3,9 @@ import React from 'react';
 
 const About = () => {
     return (
-        <div>
-            <div>About US</div>
-            Under construction!
+        <div className="rl_container">
+            <div><h1>About US</h1></div>
+            
         </div>
     );
 };
