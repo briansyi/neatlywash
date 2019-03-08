@@ -19,17 +19,28 @@ const SidenavItems = ({user}) => {
         {
             type:'navItem',
             icon:'file-text-o',
-            text:'Create An Pick Up',
+            text:'Create A Pick Up',
             link:'/orders/new-order',
             role:0,
             restricted:true
         },
         // Today's Pick-ups
+        // Get 'o' status
         {
             type:'navItem',
             icon:'file-text-o',
             text:'Today\'s Pickups',
             link:'/user/todays-pickups',
+            role:1,
+            restricted:true
+        },
+        // Pick Ups in the shop
+        // Get 'p' status
+        {
+            type:'navItem',
+            icon:'file-text-o',
+            text:'Pick Ups in the Shop',
+            link:'/user/pickups_in_the_shop',
             role:1,
             restricted:true
         },

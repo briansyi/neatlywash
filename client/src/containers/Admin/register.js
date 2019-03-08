@@ -15,7 +15,9 @@ class Register extends PureComponent {
         zip:'',
         role:0,
         password:'',
-        error:''
+        error:'',
+        priceList:'',
+        lastOrderNo:''
     }
 
     componentWillMount(){
@@ -50,7 +52,9 @@ class Register extends PureComponent {
                 state:'',
                 zip:'',
                 role:0,
-                password:''
+                password:'',
+                priceList:'',
+                lastOrderNo:''
             })
         }
     }
@@ -68,7 +72,8 @@ class Register extends PureComponent {
             address2:this.state.address2,
             city:this.state.city,
             state:this.state.state,
-            zip:this.state.zip
+            zip:this.state.zip,
+            role:0
         },this.props.user.users))
         
     }
