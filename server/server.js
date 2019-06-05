@@ -117,7 +117,7 @@ app.get('/api/getHistoryByShop',(req,res)=>{
 app.get('/api/getOpenInHouseHistoryByShop',(req,res)=>{
     let order = req.query.order;
     let openOrder = "o";
-    let inHouseOrder = "i";
+    let inHouseOrder = "p";
     console.log("req: " + req.query.shopEmail+" for all");
 
     Order.find({$and:[
