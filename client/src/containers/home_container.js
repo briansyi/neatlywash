@@ -32,7 +32,7 @@ class HomeContainer extends Component {
                <br/>
                <br/>
             <div>
-                <h1>Welcome to Neatly Wash</h1>
+                <h1>Welcome to</h1>
             </div>
             <div id="logo_container">
             
