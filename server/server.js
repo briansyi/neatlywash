@@ -32,6 +32,22 @@ app.get('/api/getOrder',(req,res)=>{
     //console.log(doc);
 })
 
+// Get the order by order no.
+// For mission control
+app.get('/api/getOrderByOrderNo',(req,res)=>{
+    //let orderNo = req.query.orderNo;
+
+    Order.find({orderNo:req.query.orderNo}).exec((err,doc)=>{
+        if(err) return res.status(400).send(err);
+        console.log(doc);
+        res.send(doc)
+    })
+    //console.log(doc);
+})
+
+
+
+
 // Auth
 app.get('/api/auth',auth,(req,res)=>{
     res.json({
@@ -40,6 +56,7 @@ app.get('/api/auth',auth,(req,res)=>{
         email:req.user.email,
         firstName:req.user.firstName,
         lastName:req.user.lastName,
+        phoneNo:req.user.phoneNo,
         address1:req.user.address1,
         address2:req.user.address2,
         city:req.user.city,
@@ -76,6 +93,49 @@ app.get('/api/getHistoryByUser',(req,res)=>{
         res.send(doc)
     })
 })
+
+// Order History by Shop 
+// For Shop Mission Control
+app.get('/api/getHistoryByShop',(req,res)=>{
+    let order = req.query.order;
+    console.log("req: " + req.query.shopEmail+" "+req.query.orderStatus);
+
+    Order.find({$and:[
+        {shopEmail:req.query.shopEmail},
+        {orderStatus:req.query.orderStatus}
+        ]}
+        ).sort({_id:order}).exec((err,doc)=>{
+        if(err) return res.status(400).send(err);
+        console.log(doc);
+        res.send(doc)
+    })
+})
+
+// Order History by Shop
+// For Shop's Mission Control
+// Will show all orders(open/processing(in-house))
+app.get('/api/getOpenInHouseHistoryByShop',(req,res)=>{
+    let order = req.query.order;
+    let openOrder = "o";
+    let inHouseOrder = "i";
+    console.log("req: " + req.query.shopEmail+" for all");
+
+    Order.find({$and:[
+            {shopEmail:req.query.shopEmail},
+            {
+                $or:[
+                    {orderStatus:openOrder},
+                    {orderStatus:inHouseOrder}
+                ]
+            }
+        ]}
+        ).sort({_id:order}).exec((err,doc)=>{
+        if(err) return res.status(400).send(err);
+        console.log(doc);
+        res.send(doc)
+    })
+})
+
 
 // Order History by customer //, 
 app.get('/api/getShopForAdmin',(req,res)=>{
@@ -122,6 +182,17 @@ app.get('/api/getHistoryByShop',(req,res)=>{
         res.send(docs)
     })
 })
+
+
+
+
+app.get('/api/users',(req,res)=>{
+    User.find({},(err,users)=>{
+        if(err) return res.status(400).send(err);
+        res.status(200).send(users)
+    })
+})
+
 
 
 // Get shop list in same zip code
@@ -297,6 +368,15 @@ app.post('/api/getShopEmailByZip',(req,res)=>{
     })
 })
 
+// Get User Info
+app.post('/api/user_info',(req,res)=>{
+    let email = req.query.email;
+
+    User.find({ email : email},(err,users)=>{
+        if(err) return res.status(400).send(err);
+        res.status(200).send(users)
+    })
+})
 
 /*    // ORDER = asc || desc
    Order.find({shopOwnerId:req.query.user}).skip(skip).sort({_id:order}).limit(limit).exec((err,docs)=>{

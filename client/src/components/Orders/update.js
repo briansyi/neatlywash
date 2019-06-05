@@ -10,7 +10,7 @@ import addDays from "date-fns/add_days";
 import '../../../node_modules/react-datepicker/dist/react-datepicker.css'
 
 
-class EditOrder extends PureComponent {
+class UpdateOrder extends PureComponent {
 
     state = {
         formdata:{
@@ -38,26 +38,24 @@ class EditOrder extends PureComponent {
         }
     }
 
-    handleChangePickUpDate = (date) => {
+    handleChangeNotes = (e) => {
+        var notes = document.getElementById("notesFromShop").value;
         this.setState(prevState => ({
             formdata: {
                 ...prevState.formdata,
-                pickUpDate: date
-            }
-        }))
-        this.setState(prevState => ({ 
-            formdata: {
-                ...prevState.formdata,
-                proDeliveryDate: moment(date).add(3, 'day')
+                notesFromShop: notes,
+                orderStatus: "p"
             }
         }))
     }
 
-    handleChangeDeliveryDate = (date) => {
+    handleChangeInvoice = (e) => {
+        var invoice = document.getElementById("invoiceFromShop").value;
         this.setState(prevState => ({
             formdata: {
                 ...prevState.formdata,
-                proDeliveryDate: date
+                totalPrice: invoice,
+                orderStatus: "p"
             }
         }))
     }
@@ -66,17 +64,18 @@ class EditOrder extends PureComponent {
         this.setState(prevState => ({
             formdata: {
                 ...prevState.formdata,
-                alternation: !this.state.formdata.alternation
+                alternation: !this.state.formdata.alternation,
+                orderStatus: "p"
             }
         }))
     }
 
-
+    // Completed/Delivered
     cancelPickUp = () => {
         this.setState(prevState => ({
             formdata: {
                 ...prevState.formdata,
-                orderStatus: "i"
+                orderStatus: "c"
             }
         }))
     }
@@ -134,8 +133,8 @@ class EditOrder extends PureComponent {
         return (
             <div className="rl_container article">
                 <form onSubmit={this.submitForm}>
-                    <h2>Change a pick up</h2>
-                    <h3>Your pick up address :</h3>
+                    <h2>Order Details</h2>
+                    <h3>Pick up address :</h3>
                     {this.state.formdata.firstName} {this.state.formdata.lastname}
                     <br/>
                     {this.state.formdata.address1}
@@ -147,99 +146,108 @@ class EditOrder extends PureComponent {
                     <hr/>
                     <div className="forDatePicker">
                         <h3>Pick Up Date:</h3>
-                        <DatePicker
-                            //placeholderText="Click to select a pick-up date"
-                            //selected={moment(this.state.formdata.pickUpDate).format("L")}
-                            selected={moment(this.state.formdata.pickUpDate)}
-                            onChange={this.handleChangePickUpDate}
-                            minDate={moment(this.state.formdata.pickUpDate)}
-                            maxDate={addDays(moment(this.state.formdata.pickUpDate), 14)}
-                            placeholderText="Pick Up Date"
-                            //showDisabledMonthNavigation
-                            withPortal
-                            //inline
-                        /><h3>06:00 ~ 09:00 PM</h3>
+                        <h3>{moment(this.state.formdata.pickUpDate).format('L')}</h3>
+                        <h3>06:00 ~ 09:00 PM</h3>
                     </div>
                     <hr/>
                     <div className="forDatePicker">
                         <h3>Delivery Date:</h3>
-                        <DatePicker
-                            //selected={moment(this.state.formdata.proDeliveryDate).format("L")}
-                            selected={moment(this.state.formdata.proDeliveryDate)}
-                            onChange={this.handleChangeDeliveryDate}
-                            minDate={moment(this.state.formdata.proDeliveryDate)}
-                            maxDate={addDays(moment(this.state.formdata.proDeliveryDate), 30)}
-                            placeholderText="Delivery Date"
-                            //showDisabledMonthNavigation
-                            withPortal
-                        /><h3>06:00 ~ 09:00 PM</h3>
+                        <h3>{moment(this.state.formdata.proDeliveryDate).format('L')}</h3>
+                        <h3>06:00 ~ 09:00 PM</h3>
                     </div>
                     <hr/>
                     <div className="fixWidth">
                         <h4>
                             <label>
-                                <input type="checkbox" onChange={this.handleCheckBox} checked={this.state.formdata.alternation} id="alt" name="alt"/> Alternation? 
+                                <input type="checkbox" onChange={this.handleCheckBox} checked={this.state.formdata.alternation} id="alt" name="alt"/> Alternation
                             </label>
                         </h4>
                     </div>
                     <hr/>
                     <div>
                         <h3>The invoice:</h3>
-                        {new Intl.NumberFormat('en-US', {
-                            style: 'currency',
-                            currency:'USD',
-                            minimumFractionDigits:2
-                        }).format(this.state.formdata.totalPrice)}
+                        $<input type = "number" name = "invoiceFromShop" id = "invoiceFromShop" min = "0.01" step = "0.01" max="100000" value={this.state.formdata.totalPrice} onChange={this.handleChangeInvoice}/>
                     </div>
                     <hr/>
                     <div>
                         <h3>Notes from the shop</h3>
-                        {this.state.formdata.notesFromShop}
+                        <textarea name="notesFromShop" id="notesFromShop" value={this.state.formdata.notesFromShop} onChange={this.handleChangeNotes}/>
                     </div>
                     <hr/>
                     <div>
-                    <Popup trigger={<button type="button">Save the changes</button>} modal>
-                    {close =>(
-                        <div className="fixWidth">
-                        <br/>
-                            <div>Confirm your changes</div><br/>
-                            <div>
-                                Pick Up Address:
+                        <Popup trigger={<button type="button">Completed/Delivered</button>} modal>
+
+                        {close =>(
+                            <div className="fixWidth">
                                 <br/>
-                                {this.state.formdata.firstName} {this.state.formdata.lastname}
-                                <br/>
-                                {this.state.formdata.address1}
-                                <br/>
-                                {this.state.formdata.city}, {this.state.formdata.state} {this.state.formdata.zip}
-                                <br/>
-                                <br/>
-                            </div>
-                            <Popup trigger={<button type="submit">Confirm</button>} position="top center" modal>
-                                
-                                    <div className="fixWidthModal">
-                                    {
-                                        this.props.orders.updateOrder ?
-                                        <Link to={{
-                                            pathname:'/user/user-history'
-                                        }}>
-                                        <button type="button">Changes Confirmed!</button>
-                                        </Link>
-                                        :null
-                                    }
+                                <div>Confirm your changes</div><br/>
+                                    <div>
+                                        This order is completed/delivered and will be closed.
                                     </div>
-                                
-                                {console.log(this.props)}
-                            </Popup>
-                            <button type="button" onClick={() => {close()}}>Cancel</button>
-                                <br/>
-                                <br/>
-                        </div>
-                    )}
-                    </Popup>
+                                    <div><br/></div>
+                                    <Popup trigger={<button type="submit">Confirm</button>} position="top center" modal>
+                                        {this.setState(prevState => ({
+                                            formdata: {
+                                            ...prevState.formdata,
+                                            orderStatus: "c"
+                                            }
+                                        }))}
+                                        {console.log(this.props)}
+                                        <div className="fixWidthModal">
+                                            {
+                                                this.props.orders.updateOrder ?
+                                                <Link to={{
+                                                    pathname:'/shop/mission-control'
+                                                    }}>
+                                                    <button type="button">This order is completed!</button>
+                                                </Link>
+                                                :null
+                                            }
+                                        </div>
+                                    
+                                    </Popup>
+                                <button type="button" onClick={() => {close()}}>Cancel</button>
+                                <br/><br/>
+                                </div>
+                            )}
+                        </Popup>
+                    </div>
+                    <div>
+                        <Popup trigger={<button type="button">Save the changes</button>} modal>
+                            {close =>(
+                                <div className="fixWidth">
+                                    <br/>
+                                    <div>Confirm your changes</div>
+                                    <br/>
+                                    <div>
+                                        Changes will be sent to the customer via email.
+                                    </div>
+                                    <Popup trigger={<button type="submit">Confirm</button>} position="top center" modal>
+                                        <div className="fixWidthModal">
+                                            {
+                                                this.props.orders.updateOrder ?
+                                                <Link to={{
+                                                    pathname:'/shop/mission-control'
+                                                }}>
+                                                <button type="button">Changes Confirmed!</button>
+                                                </Link>
+                                                :null
+                                            }
+                                        </div>
+                                        {console.log(this.props)}
+                                    </Popup>
+                                    <button type="button" onClick={() => {close()}}>Cancel</button>
+                                    <br/>
+                                    <br/>
+                                </div>
+                            )}
+                        </Popup>
                     </div>
                     <button type="button" onClick={this.props.history.goBack}>Cancel the changes</button>
-                        <div className="delete_post">
-                            <Popup trigger={
+                    <div><br/></div>
+                    
+                    {/* <div className="delete_post">
+                        <Popup trigger={
                             <div className="button" onClick={this.cancelPickUp}>Cancel the pick up</div>} modal>
                                 {close =>(
                                     <div className="fixWidthModal">
@@ -247,9 +255,8 @@ class EditOrder extends PureComponent {
                                         This pick up will not be cancelled until you press "Save the change"</div>
                                     </div>
                                 )}
-                            </Popup>
-                        </div>
-                    <div><br/></div>
+                        </Popup>
+                    </div> */}
                 </form>
             </div>
         );
@@ -262,4 +269,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps)(EditOrder)
+export default connect(mapStateToProps)(UpdateOrder)

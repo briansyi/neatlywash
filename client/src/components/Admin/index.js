@@ -19,7 +19,7 @@ const User = (props) => {
             </div> */}
             <div> 
                 <Link to={{
-                        pathname:'/login'
+                        pathname:'/user/edit'
                     }}>
                     <img alt="My Account" className="imgDashboard" src="/images/Dashboard_My_Account.png" /></Link>
             </div>

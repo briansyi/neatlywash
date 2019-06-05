@@ -26,6 +26,11 @@ class OrderConfirm extends Component {
                 }}>
                 <button type='button'>Done</button>
                 </Link>
+                <Link to={{
+                    pathname:'/user/logout'
+                }}>
+                <button type='button'>Log Out</button>
+                </Link>
             </div>
       
         );

@@ -10,6 +10,8 @@ export default function(state={},action){
             return {...state,userPosts:action.payload}
         case 'GET_USER':
             return {...state,users:action.payload}
+        case 'GET_USERS':
+            return {...state,users:action.payload}
         case 'GET_SHOPS':
             return {...state,list:action.payload}
         case 'USER_REGISTER':

@@ -548,3 +548,23 @@ header .navItem span {
     transform: rotate(360deg);
   }
 }
+
+.readyForPickupsOnly {
+    background: #dbdbdb;
+    text-align: center;
+    text-transform: uppercase;
+    color: #ffffff;
+    padding: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.inHouseOnly {
+    background:Gray;
+    text-align: center;
+    text-transform: uppercase;
+    color: #ffffff;
+    padding: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}

@@ -26,24 +26,33 @@ const SidenavItems = ({user}) => {
         },
         // Today's Pick-ups
         // Get 'o' status
-        {
+/*         {
             type:'navItem',
             icon:'file-text-o',
             text:'Today\'s Pickups',
             link:'/user/todays-pickups',
             role:1,
-            restricted:true
-        },
+            restricted:true 
+        }, */
         // Pick Ups in the shop
         // Get 'p' status
-        {
+/*         {
             type:'navItem',
             icon:'file-text-o',
             text:'Pick Ups in the Shop',
             link:'/user/pickups_in_the_shop',
             role:1,
             restricted:true
+        }, */
+        {
+            type:'navItem',
+            icon:'file-text-o',
+            text:'Mission Control for Shop',
+            link:'/shop/mission-control',
+            role:1,
+            restricted:true
         },
+
         {
             type:'navItem',
             icon:'file-text-o',
@@ -53,11 +62,19 @@ const SidenavItems = ({user}) => {
             restricted:true
         },
         // Not now: only for admin.
-        {
+        /*{
             type:'navItem',
             icon:'file-text-o',
             text:'Add Shop',
-            link:'/shopRegister',
+            link:'/user/register',
+            role:2,
+            restricted:true
+        },*/
+        {
+            type:'navItem',
+            icon:'file-text-o',
+            text:'Manage Shops',
+            link:'/admin/shops',
             role:2,
             restricted:true
         },
@@ -66,6 +83,15 @@ const SidenavItems = ({user}) => {
             icon:'file-text-o',
             text:'Login',
             link:'/login',
+            role:0,
+            restricted:false,
+            exclude:true
+        },
+        {
+            type:'navItem',
+            icon:'file-text-o',
+            text:'Sign Up',
+            link:'/user/register',
             role:0,
             restricted:false,
             exclude:true
@@ -132,7 +158,7 @@ const SidenavItems = ({user}) => {
         {
             type:'navItem',
             icon:'file-text-o',
-            text:'Logout',
+            text:'Log Out',
             link:'/user/logout',
             role:0,
             restricted:true

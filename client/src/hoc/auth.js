@@ -19,8 +19,11 @@ export default function(ComposedClass,reload){
             //if(!nextProps){
             if(!nextProps.user.login.isAuth){
                 if(reload){
-                    this.props.history.push('/login');
-                }
+                    this.props.history.push('/login')
+                } 
+                // else {
+                //     this.props.history.push('/user/register')
+                // }
                 console.log("Here~2");
             } else {
                 if(reload === false) {

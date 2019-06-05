@@ -84,6 +84,47 @@ export function getOrderWithUser(
 
 }
 
+// Getting orders for shop
+// o: Ready for pickups; i: In-house; c: Delievered/Completed
+// id:shopOwnerId; status: check above; order: asc as default
+export function getOrderWithShop(
+    shopEmail,
+    orderStatus,
+    order = 'asc'
+){
+    const request = axios.get(`/api/getHistoryByShop?shopEmail=${shopEmail}&orderStatus=${orderStatus}&order=${order}`)
+                    .then(response => {
+                            return response.data
+                        
+                        }
+                    )
+    console.log(request);
+    return {
+        type:'GET_ORDERS',
+        payload:request
+    }
+
+}
+
+// Getting orders(open and in-house only) for shop
+export function getOpenInHouseOrderWithShop(
+    shopEmail,
+    order = 'asc'
+){
+    const request = axios.get(`/api/getOpenInHouseHistoryByShop?shopEmail=${shopEmail}&order=${order}`)
+                    .then(response => {
+                            return response.data
+                        
+                        }
+                    )
+    console.log(request);
+    return {
+        type:'GET_ORDERS',
+        payload:request
+    }
+}
+
+
 export function sendEmailToShopOwner(
     zip,
     contents
@@ -221,6 +262,17 @@ export function getOrder(id){
     }
 }
 
+// Get one order by order no
+export function getOrderByOrderNo(orderNo){
+    const request = axios.get(`/api/getOrderByOrderNo?orderNo=${orderNo}`)
+                    .then(response => response.data);
+    //console.log(response.data)
+    return {
+        type:'GET_ORDERS',
+        payload:request
+    }
+}
+
 // Finished
 export function updateOrder(data){
     const request = axios.post(`/api/order_update`,data)
@@ -285,15 +337,24 @@ export function getUsers(){
                     .then(response => response.data);
         
     return {
-        type:'GET_USER',
+        type:'GET_USERS',
         payload:request
     }
 }
 
+export function getUser(email){
+    const request = axios.post('/api/user_info')
+                    .then(response => response.data);
+
+    return {
+        type: 'GET_USER',
+        payload:request
+    }
+}
 
 export function userRegister(user,userList){
+    console.log(request);
     const request = axios.post(`/api/register`,user)
-
     return (dispatch) =>{
         request.then(({data})=>{
             let users = data.success ? [...userList,data.user]:userList;
@@ -307,5 +368,15 @@ export function userRegister(user,userList){
                 payload:response
             })
         })
+    }
+}
+
+export function userInfoUpdate(data){
+    const request = axios.post(`/api/user_update`,data)
+    .then(response => response.data);
+
+    return {
+    type:'UPDATE_USER',
+    payload:request
     }
 }

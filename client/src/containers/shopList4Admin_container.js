@@ -7,8 +7,8 @@ import OrderItem from '../widgetsUI/order_item';
 class ShopList4AdminContainer extends Component {
 
     componentWillMount(){
-        console.log(this.props);
         this.props.dispatch(getShopForAdmin(this.props.user.login.email,1,0,'desc'));
+        console.log("Am I getting a list??");
         console.log(this.props);
     }
 

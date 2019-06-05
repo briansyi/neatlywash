@@ -6,7 +6,7 @@ import ShopItem from '../widgetsUI/shop_item';
 
 class ShopContainer extends Component {
 
-    compomentWillMount(){
+    componentWillMount(){
         this.props.dispatch(getShopsByZip(this.props.user.login.zip))
         console.log(this.props);
     }

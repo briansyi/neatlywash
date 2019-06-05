@@ -3,13 +3,11 @@ import { connect } from 'react-redux';
 import { getOrders } from '../actions';
 import { NavLink } from "react-router-dom";
 
-import BookItem from '../widgetsUI/order_item';
+import OrderItem from '../widgetsUI/order_item';
 
 class HomeContainer extends Component {
 
     componentWillMount(){
-        console.log(this.props);
-        
         this.props.dispatch(getOrders(5,0,'desc'))
     }
 
@@ -17,7 +15,7 @@ class HomeContainer extends Component {
     renderItems = (orders) => (
         orders.list ?  
         orders.list.map( item => (
-                <BookItem {...item} key={item._id}/>
+                <OrderItem {...item} key={item._id}/>
             ))
         :null
     )
@@ -52,7 +50,7 @@ class HomeContainer extends Component {
                 <NavLink to={{
                         // Need to update
                         // pathname:'/user/register'
-                        pathname:'/login'
+                        pathname:'/user/register'
                     }}>
                     <img alt="Sign Up" src="/images/SignUp.png" className="imgFrontBtn"/>
 

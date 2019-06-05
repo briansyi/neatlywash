@@ -94,26 +94,6 @@ class AddOrder extends Component {
         }))
     }
 
-    handleInput = (event,name) => {
-        const newFormdata = {
-            ...this.state.formdata
-        }
-
-        this.setState({
-            formdata:newFormdata
-        })
-    }
-
-/*     showNewOrder = (order) =>{
-        order.post ?
-            <div className="conf_link">
-                Confirmed !! < NavLink to={`/orders/${order.orderId}`}>
-                    Click the link to see the post
-                </NavLink>
-            </div>
-        :null
-    } */
-
     submitForm = (e) => {
         e.preventDefault();
         console.log("Submit Form!")

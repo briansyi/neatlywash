@@ -25,6 +25,9 @@ const userSchema = mongoose.Schema({
         type:String,
         maxlength:100
     },
+    phoneNo:{
+        type:Number
+    },
     /*
     // Need to revisit 
     address:[{
