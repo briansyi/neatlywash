@@ -186,13 +186,14 @@ class UpdateOrder extends PureComponent {
                                     </div>
                                     <div><br/></div>
                                     <Popup trigger={<button type="submit">Confirm</button>} position="top center" modal>
+
+                                    {console.log(this.props)}
                                         {this.setState(prevState => ({
                                             formdata: {
                                             ...prevState.formdata,
                                             orderStatus: "c"
                                             }
                                         }))}
-                                        {console.log(this.props)}
                                         <div className="fixWidthModal">
                                             {
                                                 this.props.orders.updateOrder ?
