@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { userRegister } from '../../actions';
+import { Link } from "react-router-dom";
 
 class Register extends PureComponent {
 
@@ -22,52 +23,98 @@ class Register extends PureComponent {
         }
     }
     componentWillMount(){
-        console.log("Hello??" + this.props);
+        console.log("Hello?? in reg." + this.props);
     }
 
     handleInputFirstName = (e) => {
-        var userFirstName = document.getElementById("userFirstName");
-        // this.setState(prevState => ({
-        //     formdata: {
-        //         ...prevState.formdata,
-        //         firstName:userFirstName
-        //     }
-        // }))
-/*         formdata[firstName] = userFirstName;
-        this.setState({
-            formdata:newFormdata
-        }) */
-        
-        // this.setState({email:event.target.value})
-        console.log(this.props.formdata);
+        var userFirstName = document.getElementById("userFirstName").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                firstName:userFirstName
+            }
+        }))
     } 
-    handleInputLastName = (event) => {
-        this.setState({lastName:event.target.value})
+    handleInputLastName = (e) => {
+        var userLastName = document.getElementById("userLastName").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                lastName:userLastName
+            }
+        }))
     } 
-    handleInputEmail = (event) => {
-        this.setState({email:event.target.value})
+    handleInputEmail = (e) => {
+        var userEmail = document.getElementById("userEmail").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                email:userEmail
+            }
+        }))
     }
-    handleInputPhoneNo = (event) => {
-        this.setState({phoneNo:event.target.value})
+    handleInputPhoneNo = (e) => {
+        var userPhoneNo = document.getElementById("userPhoneNo").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                phoneNo:userPhoneNo
+            }
+        }))
     } 
-    handleInputAddress1 = (event) => {
-        this.setState({address1:event.target.value})
+    handleInputAddress1 = (e) => {
+        var userAddress1 = document.getElementById("userAddress1").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                address1:userAddress1
+            }
+        }))
     } 
-    handleInputAddress2 = (event) => {
-        this.setState({address2:event.target.value})
+    handleInputAddress2 = () => {
+        var userAddress2 = document.getElementById("userAddress2").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                address2:userAddress2
+            }
+        }))
     } 
-    handleInputCity= (event) => {
-        this.setState({city:event.target.value})
+    handleInputCity= (e) => {
+        var userCity = document.getElementById("userCity").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                city:userCity
+            }
+        }))
     } 
-    handleInputState = (event) => {
-        this.setState({state:event.target.value})
+    handleInputState = (e) => {
+        var userState = document.getElementById("userState").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                state:userState
+            }
+        }))
     } 
-    handleInputZip = (event) => {
-        this.setState({city:event.target.value})
-        console.log(this.props);
+    handleInputZip = (e) => {
+        var userZip = document.getElementById("userZip").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                zip:userZip
+            }
+        }))
     } 
-    handleInputPassword = (event) => {
-        this.setState({password:event.target.value})
+    handleInputPassword = (e) => {
+        var userPassword = document.getElementById("userPassword").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                password:userPassword
+            }
+        }))
     } 
 
 /*     handleInput = (event,name) => {
@@ -106,10 +153,11 @@ class Register extends PureComponent {
 
     submitForm = (e) => {
         console.log("I am looking for you!");
-        console.log(this.props.formdata);
+        console.log(this.state.formdata);
         e.preventDefault();
         this.props.dispatch(userRegister(this.state.formdata));
-        
+        //this.props.dispatch(push('/user/finished-register'));
+        this.props.history.push('/');
     }
     render() {
         let user = this.props.user;
@@ -123,8 +171,8 @@ class Register extends PureComponent {
                             type="text"
                             placeholder="Enter First Name"
                             id="userFirstName"
-                            value={this.state.firstName}
-                            onChange={this.handleInputFirstName()}
+                            value={this.state.formdata.firstName}
+                            onChange={this.handleInputFirstName}
                          />
                     </div>
 
@@ -132,8 +180,9 @@ class Register extends PureComponent {
                         <input
                             type="text"
                             placeholder="Enter Last Name"
-                            value={this.state.lastName}
-                            onChange={(event)=>this.handleInput(event,'lastName')}
+                            id="userLastName"
+                            value={this.state.formdata.lastName}
+                            onChange={this.handleInputLastName}
                          />
                     </div>
 
@@ -141,8 +190,9 @@ class Register extends PureComponent {
                         <input
                             type="text"
                             placeholder="Enter Email"
-                            value={this.state.email}
-                            onChange={(event)=>this.handleInput(event,'email')}
+                            id="userEmail"
+                            value={this.state.formdata.email}
+                            onChange={this.handleInputEmail}
                          />
                     </div>
                     <span>Your email will be your ID<br/> and you cannot change your email <br/>after the registration.</span>
@@ -151,8 +201,9 @@ class Register extends PureComponent {
                         <input
                             type="password"
                             placeholder="Enter Password"
-                            value={this.state.password}
-                            onChange={(event)=>this.handleInput(event,'password')}
+                            id="userPassword"
+                            value={this.state.formdata.password}
+                            onChange={this.handleInputPassword}
                          />
                     </div>
 
@@ -160,8 +211,9 @@ class Register extends PureComponent {
                         <input
                             type="tel"
                             placeholder="Phone No. (No. Only)"
-                            value={this.state.phoneNo}
-                            onChange={(event)=>this.handleInput(event,'phoneNo')}
+                            id="userPhoneNo"
+                            value={this.state.formdata.phoneNo}
+                            onChange={this.handleInputPhoneNo}
                             pattern="[0-9]{10}"
                          />
                          <br/>
@@ -172,44 +224,52 @@ class Register extends PureComponent {
                         <input
                             type="text"
                             placeholder="Enter Address1"
-                            value={this.state.address1}
-                            onChange={(event)=>this.handleInput(event,'address1')}
+                            id="userAddress1"
+                            value={this.state.formdata.address1}
+                            onChange={this.handleInputAddress1}
                          />
                     </div>
                     <div className="form_element">
                         <input
                             type="text"
                             placeholder="Enter Address2"
-                            value={this.state.address2}
-                            onChange={(event)=>this.handleInput(event,'address2')}
+                            id="userAddress2"
+                            value={this.state.formdata.address2}
+                            onChange={this.handleInputAddress2}
                          />
                     </div>
                     <div className="form_element">
                         <input
                             type="text"
                             placeholder="Enter City"
-                            value={this.state.city}
-                            onChange={(event)=>this.handleInput(event,'city')}
+                            id="userCity"
+                            value={this.state.formdata.city}
+                            onChange={this.handleInputCity}
                          />
                     </div>
                     <div className="form_element">
                         <input
                             type="text"
                             placeholder="Enter State"
-                            value={this.state.state}
-                            onChange={(event)=>this.handleInput(event,'state')}
+                            id="userState"
+                            value={this.state.formdata.state}
+                            onChange={this.handleInputState}
                          />
                     </div>
                     <div className="form_element">
                         <input
                             type="text"
                             placeholder="Enter Zip"
-                            value={this.state.zip}
-                            onChange={(event)=>this.handleInput(event,'zip')}
+                            id="userZip"
+                            value={this.state.formdata.zip}
+                            onChange={this.handleInputZip}
                          />
                     </div>
-
-                    <button type="submit">Register</button>
+                    {/* <Link to={{
+                        pathname:'/login'
+                    }}>   </Link>*/}
+                        <button type="submit">Register</button>
+                  
                     <div className="error">
                         {this.state.error}
                     </div>

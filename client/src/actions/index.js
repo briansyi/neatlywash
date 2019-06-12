@@ -352,7 +352,19 @@ export function getUser(email){
     }
 }
 
-export function userRegister(user,userList){
+export function userRegister(user){
+    console.log(request);
+    const request = axios.post(`/api/register`,user)
+                .then(response => response.data);
+    return {
+                type:'USER_REGISTER',
+                payload:request
+    }
+}
+
+
+// Originally userRegister
+export function shopRegister(user,userList){
     console.log(request);
     const request = axios.post(`/api/register`,user)
     return (dispatch) =>{
@@ -371,8 +383,9 @@ export function userRegister(user,userList){
     }
 }
 
-export function userInfoUpdate(data){
-    const request = axios.post(`/api/user_update`,data)
+
+export function userInfoUpdate(user){
+    const request = axios.post(`/api/user_update`,user)
     .then(response => response.data);
 
     return {

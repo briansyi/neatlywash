@@ -425,6 +425,7 @@ app.post('/api/login',(req,res)=>{
 
 // User Info. update
 app.post('/api/user_update',(req,res)=>{
+    console.log(req.body);
     User.findByIdAndUpdate(req.body._id,req.body,{new:true},(err,doc)=>{
         if(err) return res.status(400).send(err);
         res.json({

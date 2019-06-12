@@ -28,7 +28,8 @@ import Auth from './hoc/auth';
 // <Route path="/orders/new-order" exact component={Auth(NewOrder,true)}/>
 
 // Customer Registration
-import RegisterUser from'./containers/User/register';
+import RegisterUser from './containers/User/register';
+import FinishedRegisterUser from './containers/User/registered';
 
 // For Admin
 import AdminHome from './components/Home/admin';
@@ -57,6 +58,7 @@ const Routes = () => {
                 <Route path="/user" exact component={Auth(User,true)}/>
                 <Route path="/user/add" exact component={Auth(AddReview,true)}/>
                 <Route path="/user/register" exact component={Auth(RegisterUser,true)}/>
+                <Route path="/user/finished-register" exact component={Auth(FinishedRegisterUser,true)}/>
                 <Route path="/user/user-history" exact component={Auth(OrderHistory,true)}/>
                 <Route path="/user/shop-list" exact component={Auth(ShopMapList,true)}/>
                 <Route path="/user/edit-pickup/:id" exact component={Auth(EditPickUp,true)}/>

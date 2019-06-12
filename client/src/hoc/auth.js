@@ -16,8 +16,9 @@ export default function(ComposedClass,reload){
         componentWillReceiveProps(nextProps){
             this.setState({loading:false})
             console.log("Here~3");
+            console.log(nextProps);
             //if(!nextProps){
-            if(!nextProps.user.login.isAuth){
+            if(!nextProps.user.login.isAuth && (nextProps.location.pathname !='/user/register')){
                 if(reload){
                     this.props.history.push('/login')
                 } 

@@ -5,6 +5,7 @@ import { getUser, userInfoUpdate } from '../../actions';
 class EditUserInfo extends PureComponent {
 
     state ={
+        _id:'',
         firstName:'',
         lastName:'',
         email:'',
@@ -23,13 +24,13 @@ class EditUserInfo extends PureComponent {
 
     componentWillMount(){
 //        this.props.dispatch(getUsers())
+        console.log(this.props.user);
         this.props.dispatch(getUser())
-        console.log("Hello?!?")
-        console.log(this.props)
         let userInfo = this.props.user.login;
         
         this.setState({
             formdata:{
+                _id:userInfo.id,
                 firstName:userInfo.firstName,
                 lastName:userInfo.lastName,
                 email:userInfo.email,
@@ -48,18 +49,96 @@ class EditUserInfo extends PureComponent {
     }
 
 
-    handleInputEmail = (event) => {
-        this.setState({email:event.target.value})
+    handleInputFirstName = (e) => {
+        var userFirstName = document.getElementById("userFirstName").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                firstName:userFirstName
+            }
+        }))
     } 
-    handleInputPassword= (event) => {
-        this.setState({password:event.target.value})
+    handleInputLastName = (e) => {
+        var userLastName = document.getElementById("userLastName").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                lastName:userLastName
+            }
+        }))
     } 
-    handleInputFirstName = (event) => {
-        this.setState({firstName:event.target.value})
+/*     handleInputEmail = (e) => {
+        var userEmail = document.getElementById("userEmail").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                email:userEmail
+            }
+        }))
+    } */
+    handleInputPhoneNo = (e) => {
+        var userPhoneNo = document.getElementById("userPhoneNo").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                phoneNo:userPhoneNo
+            }
+        }))
     } 
-    handleInputLastname = (event) => {
-        this.setState({lastName:event.target.value})
+    handleInputAddress1 = (e) => {
+        var userAddress1 = document.getElementById("userAddress1").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                address1:userAddress1
+            }
+        }))
     } 
+    handleInputAddress2 = () => {
+        var userAddress2 = document.getElementById("userAddress2").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                address2:userAddress2
+            }
+        }))
+    } 
+    handleInputCity= (e) => {
+        var userCity = document.getElementById("userCity").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                city:userCity
+            }
+        }))
+    } 
+    handleInputState = (e) => {
+        var userState = document.getElementById("userState").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                state:userState
+            }
+        }))
+    } 
+    handleInputZip = (e) => {
+        var userZip = document.getElementById("userZip").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                zip:userZip
+            }
+        }))
+    } 
+    handleInputPassword = (e) => {
+        var userPassword = document.getElementById("userPassword").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                password:userPassword
+            }
+        }))
+    }
 
 /*     componentWillReceiveProps(nextProps){
         let userInfo = this.props.user.login;
@@ -86,17 +165,13 @@ class EditUserInfo extends PureComponent {
     submitForm = (e) => {
         e.preventDefault();
         this.props.dispatch(userInfoUpdate(this.state.formdata))
-        
+        this.props.history.push('/user');
     }
 
 
 
     render() {
         let user = this.props.user;
-        console.log("We are in the lender!!");
-        console.log(this.state.formdata);
-        console.log(this.state);
-        console.log("Really??");
         return (
             <div className="rl_container">
                 <form onSubmit={this.submitForm}>
@@ -105,6 +180,7 @@ class EditUserInfo extends PureComponent {
                         <input
                             type="text"
                             placeholder="Enter First Name"
+                            id="userFirstName"
                             value={this.state.formdata.firstName}
                             onChange={this.handleInputFirstName}
                          />
@@ -114,24 +190,27 @@ class EditUserInfo extends PureComponent {
                         <input
                             type="text"
                             placeholder="Enter Last Name"
+                            id="userLastName"
                             value={this.state.formdata.lastName}
                             onChange={this.handleInputLastname}
                          />
                     </div>
 
                     <div className="form_element">
-                        <input
+{/*                         <input
                             type="email"
                             placeholder="Enter Email"
                             value={this.state.formdata.email}
                             onChange={this.handleInputEmail}
-                         />
+                         /> */}
+                         <h1>{this.state.formdata.email}</h1>
                     </div>
 
                     <div className="form_element">
                         <input
                             type="password"
                             placeholder="Enter Password"
+                            id="userPassword"
                             value={this.state.formdata.password}
                             onChange={this.handleInputPassword}
                          />
@@ -140,8 +219,9 @@ class EditUserInfo extends PureComponent {
                         <input
                             type="tel"
                             placeholder="Phone No. (No. Only)"
+                            id="userPhoneNo"
                             value={this.state.phoneNo}
-                            onChange={(event)=>this.handleInput(event,'phoneNo')}
+                            onChange={this.handleInputPhoneNo}
                             pattern="[0-9]{10}"
                          />
                          <br/>
@@ -152,6 +232,7 @@ class EditUserInfo extends PureComponent {
                         <input
                             type="adress1"
                             placeholder="Enter Address1"
+                            id="userAddress1"
                             value={this.state.formdata.address1}
                             onChange={this.handleInputAddress1}
                          />
@@ -160,6 +241,7 @@ class EditUserInfo extends PureComponent {
                         <input
                             type="address2"
                             placeholder="Enter Address2"
+                            id="userAddress2"
                             value={this.state.formdata.address2}
                             onChange={this.handleInputAddress2}
                          />
@@ -168,6 +250,7 @@ class EditUserInfo extends PureComponent {
                         <input
                             type="city"
                             placeholder="Enter City"
+                            id="userCity"
                             value={this.state.formdata.city}
                             onChange={this.handleInputCity}
                          />
@@ -176,6 +259,7 @@ class EditUserInfo extends PureComponent {
                         <input
                             type="state"
                             placeholder="Enter State"
+                            id="userState"
                             value={this.state.formdata.state}
                             onChange={this.handleInputState}
                          />
@@ -184,6 +268,7 @@ class EditUserInfo extends PureComponent {
                         <input
                             type="zip"
                             placeholder="Enter Zip"
+                            id="userZip"
                             value={this.state.formdata.zip}
                             onChange={this.handleInputZip}
                          />

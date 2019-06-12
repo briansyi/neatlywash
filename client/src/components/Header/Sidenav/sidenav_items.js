@@ -47,7 +47,7 @@ const SidenavItems = ({user}) => {
         {
             type:'navItem',
             icon:'file-text-o',
-            text:'Mission Control for Shop',
+            text:'Control Room for Shop Owner',
             link:'/shop/mission-control',
             role:1,
             restricted:true

@@ -7,6 +7,7 @@ const Nav = (props) => {
        <SideNav
             showNav={props.showNav}
             onHideNav={props.onHideNav}
+            //onClick={props.onHideNave}
             navStyle={{
                 background:'#242424',
                 maxWidth:'220px'
