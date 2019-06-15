@@ -58,6 +58,12 @@ class AddOrder extends Component {
             console.log(error);
         })
     }
+    componentWillMount() {
+        setTimeout(() => {
+            window.history.forward()
+          }, 0);
+          window.onunload=function(){};
+    }
     componentWillUnmount() {
         this.props.dispatch(clearNewOrder())
     }

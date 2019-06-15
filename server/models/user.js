@@ -26,7 +26,7 @@ const userSchema = mongoose.Schema({
         maxlength:100
     },
     phoneNo:{
-        type:Number
+        type:String
     },
     /*
     // Need to revisit 

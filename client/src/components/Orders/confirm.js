@@ -10,6 +10,17 @@ class OrderConfirm extends Component {
         super(props);
     }
 
+    componentWillMount() {
+        console.log(this.props);
+        /* this.props.history.pushState(null, null, this.props.history.location.href);
+        window.onpopstate = function(event) {
+            this.props.history.go(1);
+        }; */
+        setTimeout(() => {
+            window.history.forward()
+          }, 0);
+          window.onunload=function(){};
+    }
  
 
     render () {
@@ -21,16 +32,26 @@ class OrderConfirm extends Component {
                 </div>
                 <br/>
                 <OrderConfirmContainer/>
-                <Link to={{
+                
+                <button
+                    type='button'
+                    onClick={() => {this.props.history.push('/user')}}
+                >Done</button>
+{/*                 <Link to={{
                     pathname:'/user'
                 }}>
                 <button type='button'>Done</button>
-                </Link>
-                <Link to={{
+                </Link> */}
+                <br/>
+                <button
+                    type='button'
+                    onClick={() => {this.props.history.push('/user/logout')}}
+                >Log Out</button>
+                {/* <Link to={{
                     pathname:'/user/logout'
                 }}>
                 <button type='button'>Log Out</button>
-                </Link>
+                </Link> */}
             </div>
       
         );

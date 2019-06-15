@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { getUser, userInfoUpdate } from '../../actions';
+import { AsYouType } from 'libphonenumber-js';
 
 class EditUserInfo extends PureComponent {
+
 
     state ={
         _id:'',
@@ -10,6 +12,7 @@ class EditUserInfo extends PureComponent {
         lastName:'',
         email:'',
         phoneNo:'',
+        phoneNoStr:'',
         address1:'',
         address2:'',
         city:'',
@@ -23,11 +26,9 @@ class EditUserInfo extends PureComponent {
     }
 
     componentWillMount(){
-//        this.props.dispatch(getUsers())
         console.log(this.props.user);
         this.props.dispatch(getUser())
         let userInfo = this.props.user.login;
-        
         this.setState({
             formdata:{
                 _id:userInfo.id,
@@ -78,10 +79,11 @@ class EditUserInfo extends PureComponent {
     } */
     handleInputPhoneNo = (e) => {
         var userPhoneNo = document.getElementById("userPhoneNo").value;
+        var phoneTest = new AsYouType('US').input(userPhoneNo);
         this.setState(prevState => ({
             formdata: {
                 ...prevState.formdata,
-                phoneNo:userPhoneNo
+                phoneNo:phoneTest
             }
         }))
     } 
@@ -140,28 +142,6 @@ class EditUserInfo extends PureComponent {
         }))
     }
 
-/*     componentWillReceiveProps(nextProps){
-        let userInfo = this.props.user.login;
-        console.log("User Info.")
-        console.log(userInfo);
-            this.setState({
-                formdata:{
-                    firstName:userInfo.firstName,
-                    lastName:userInfo.lastName,
-                    email:userInfo.email,
-                    address1:userInfo.address1,
-                    address2:userInfo.address2,
-                    city:userInfo.city,
-                    state:userInfo.state,
-                    zip:userInfo.zip,
-                    role:0,
-                    password:userInfo.password,
-                    priceList:'',
-                    lastOrderNo:''
-                }
-            })
-    } */
-
     submitForm = (e) => {
         e.preventDefault();
         this.props.dispatch(userInfoUpdate(this.state.formdata))
@@ -202,8 +182,9 @@ class EditUserInfo extends PureComponent {
                             placeholder="Enter Email"
                             value={this.state.formdata.email}
                             onChange={this.handleInputEmail}
-                         /> */}
-                         <h1>{this.state.formdata.email}</h1>
+                            disabled
+                        />  */}
+                        <h3>{this.state.formdata.email}</h3>
                     </div>
 
                     <div className="form_element">
@@ -220,12 +201,10 @@ class EditUserInfo extends PureComponent {
                             type="tel"
                             placeholder="Phone No. (No. Only)"
                             id="userPhoneNo"
-                            value={this.state.phoneNo}
+                            value={this.state.formdata.phoneNo}
                             onChange={this.handleInputPhoneNo}
-                            pattern="[0-9]{10}"
                          />
                          <br/>
-                         <span>Format: (408) 111-2222 to <br/>4081112222</span>
                     </div>
 
                     <div className="form_element">

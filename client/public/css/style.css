@@ -226,17 +226,17 @@ header .navItem span {
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: #d8d8d8;
+    color: #686868;
   }
   ::-moz-placeholder { /* Firefox 19+ */
-    color: #d8d8d8;
+    color: #686868;
   }
   :-ms-input-placeholder { /* IE 10+ */
-    color: #d8d8d8;
+    color: #686868;
   }
   :-moz-placeholder { /* Firefox 18- */
-    color: #d8d8d8;
-  }
+    color: #686868;
+  }/* #d8d8d8  */
 
 /*=============================
             USER

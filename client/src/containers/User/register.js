@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { userRegister } from '../../actions';
-import { Link } from "react-router-dom";
+import { AsYouType } from 'libphonenumber-js';
+import Popup from "reactjs-popup";
 
 class Register extends PureComponent {
 
@@ -22,8 +23,11 @@ class Register extends PureComponent {
             lastOrderNo:''
         }
     }
-    componentWillMount(){
-        console.log("Hello?? in reg." + this.props);
+    componentWillMount() {
+        setTimeout(() => {
+            window.history.forward()
+          }, 0);
+          window.onunload=function(){};
     }
 
     handleInputFirstName = (e) => {
@@ -55,10 +59,11 @@ class Register extends PureComponent {
     }
     handleInputPhoneNo = (e) => {
         var userPhoneNo = document.getElementById("userPhoneNo").value;
+        var phoneTest = new AsYouType('US').input(userPhoneNo);
         this.setState(prevState => ({
             formdata: {
                 ...prevState.formdata,
-                phoneNo:userPhoneNo
+                phoneNo:phoneTest
             }
         }))
     } 
@@ -117,46 +122,11 @@ class Register extends PureComponent {
         }))
     } 
 
-/*     handleInput = (event,name) => {
-        console.log(event +" "+ name);
-        const newFormdata = {
-            ...this.state.formdata
-        }
-        newFormdata[name] = event.target.value;
-
-        this.setState({
-            formdata:newFormdata
-        })
-        console.log(this.state.props);
-    } */
-
-/*     componentWillReceiveProps(nextProps){
-        if(nextProps.user.register === false){
-            this.setState({error:'Error,try again'})
-        } else{
-            this.setState({
-                firstName:'',
-                lastName:'',
-                email:'',
-                address1:'',
-                address2:'',
-                city:'',
-                state:'',
-                zip:'',
-                role:0,
-                password:'',
-                priceList:'',
-                lastOrderNo:''
-            })
-        }
-    } */
-
     submitForm = (e) => {
         console.log("I am looking for you!");
         console.log(this.state.formdata);
         e.preventDefault();
         this.props.dispatch(userRegister(this.state.formdata));
-        //this.props.dispatch(push('/user/finished-register'));
         this.props.history.push('/');
     }
     render() {
@@ -173,6 +143,7 @@ class Register extends PureComponent {
                             id="userFirstName"
                             value={this.state.formdata.firstName}
                             onChange={this.handleInputFirstName}
+                            required
                          />
                     </div>
 
@@ -183,6 +154,7 @@ class Register extends PureComponent {
                             id="userLastName"
                             value={this.state.formdata.lastName}
                             onChange={this.handleInputLastName}
+                            required
                          />
                     </div>
 
@@ -193,6 +165,7 @@ class Register extends PureComponent {
                             id="userEmail"
                             value={this.state.formdata.email}
                             onChange={this.handleInputEmail}
+                            required
                          />
                     </div>
                     <span>Your email will be your ID<br/> and you cannot change your email <br/>after the registration.</span>
@@ -204,20 +177,20 @@ class Register extends PureComponent {
                             id="userPassword"
                             value={this.state.formdata.password}
                             onChange={this.handleInputPassword}
+                            required
                          />
                     </div>
 
                     <div className="form_element">
                         <input
                             type="tel"
-                            placeholder="Phone No. (No. Only)"
+                            placeholder="Phone Number"
                             id="userPhoneNo"
                             value={this.state.formdata.phoneNo}
                             onChange={this.handleInputPhoneNo}
-                            pattern="[0-9]{10}"
+                            required
                          />
                          <br/>
-                         <span>Format: (408) 111-2222 to <br/>4081112222</span>
                     </div>
 
                     <div className="form_element">
@@ -227,6 +200,7 @@ class Register extends PureComponent {
                             id="userAddress1"
                             value={this.state.formdata.address1}
                             onChange={this.handleInputAddress1}
+                            required
                          />
                     </div>
                     <div className="form_element">
@@ -245,6 +219,7 @@ class Register extends PureComponent {
                             id="userCity"
                             value={this.state.formdata.city}
                             onChange={this.handleInputCity}
+                            required
                          />
                     </div>
                     <div className="form_element">
@@ -254,6 +229,7 @@ class Register extends PureComponent {
                             id="userState"
                             value={this.state.formdata.state}
                             onChange={this.handleInputState}
+                            required
                          />
                     </div>
                     <div className="form_element">
@@ -263,12 +239,17 @@ class Register extends PureComponent {
                             id="userZip"
                             value={this.state.formdata.zip}
                             onChange={this.handleInputZip}
+                            required
                          />
                     </div>
-                    {/* <Link to={{
-                        pathname:'/login'
-                    }}>   </Link>*/}
-                        <button type="submit">Register</button>
+                        <Popup trigger={<button type="button">Register</button>} position="top center" modal>
+                                {close =>(
+                                    <div className="fixWidthModal">
+                                        <button type="submit">Proceed to Login</button>
+                                    </div>
+                                )}
+                        </Popup>
+                        {/* <button type="submit">Register</button> */}
                   
                     <div className="error">
                         {this.state.error}

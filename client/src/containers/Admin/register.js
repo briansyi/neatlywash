@@ -22,7 +22,6 @@ class Register extends PureComponent {
 
     componentWillMount(){
         this.props.dispatch(getUsers())
-        console.log("Hello??")
     }
 
 
