@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { userRegister } from '../../actions';
 import { AsYouType } from 'libphonenumber-js';
 import Popup from "reactjs-popup";
+import axios from 'axios';
 
 class Register extends PureComponent {
 
@@ -50,6 +51,24 @@ class Register extends PureComponent {
     } 
     handleInputEmail = (e) => {
         var userEmail = document.getElementById("userEmail").value;
+
+        axios.post(`/api/check_user_email?zip=${userEmail}`)
+        .then(res => {
+            const shopEmailFromDB = res.data;
+            console.log(shopEmailFromDB); 
+            this.setState({shopInfo:shopEmailFromDB})
+            let tmpShopEmail = this.state.shopInfo[0].email
+            this.setState(prevState => ({
+                formdata: {
+                    ...prevState.formdata,
+                    shopEmail: tmpShopEmail
+                }
+            }))
+        })
+        .catch(error =>{
+            console.log(error);
+        })
+
         this.setState(prevState => ({
             formdata: {
                 ...prevState.formdata,

@@ -102,8 +102,6 @@ class AddOrder extends Component {
 
     submitForm = (e) => {
         e.preventDefault();
-        console.log("Submit Form!")
-        console.log(this.props)
         this.props.user.lastOrderNo = this.state.formdata.orderNo
         this.props.user.lastPickUpDate = this.state.formdata.pickUpDate
         this.props.dispatch(addOrder({

@@ -7,6 +7,7 @@ import OrderItem from '../widgetsUI/order_item';
 class OrderHistoryContainer extends Component {
 
     componentWillMount(){
+        console.log("Am I here??");
         this.props.dispatch(getOrderWithUser(this.props.user.login.id,5,0,'desc'));
     }
 

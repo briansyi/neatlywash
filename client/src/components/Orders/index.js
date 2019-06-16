@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 class OrderView extends Component {
 
     componentWillMount(){
-        //console.log(this.props.user);
+        //console.log("Am I here??");
         this.props.dispatch(getOrderWithUser(this.props.user.login.id))
     }
 

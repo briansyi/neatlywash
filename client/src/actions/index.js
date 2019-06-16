@@ -8,7 +8,7 @@ export function getOrders(
     list = ''
 ){
     
-    const request = axios.get(`/api/getHistoryByShop?limit=${limit}&skip=${start}&order=${order}`)
+    const request = axios.get(`/api/getHistoryForUser?limit=${limit}&skip=${start}&order=${order}`)
                     .then(response => {
                             if(list){
                                 return [...list,...response.data]

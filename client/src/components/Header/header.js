@@ -11,8 +11,12 @@ class Header extends Component {
 
     onHideNav = () => {
         this.setState({showNav:false})
+        console.log("123Clicked!!!!");
     }
 
+    onClicked = () => {
+        console.log("Clicked!!!!");
+    }
 
     render() {
         return (
@@ -26,12 +30,17 @@ class Header extends Component {
                             cursor:'pointer'
                         }}
                     />
-                </div>
+                <p onClick = {()=> this.setState({showNav:false})}>
                 <Nav
                     showNav={this.state.showNav}
                     onHideNav={()=>this.onHideNav()}
+                    onClick={()=> (
+                        this.setState({showNav:false}),
+                        this.onClicked
+                    )}
                 />
-
+                </p>
+                </div>
                 <Link to="/" className="logo">
                         Neatly Wash
                 </Link>

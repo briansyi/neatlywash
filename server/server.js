@@ -170,7 +170,7 @@ app.get('/api/getHistoryByShopAll',(req,res)=>{
 })
 
 // Order History by shop(limit)
-app.get('/api/getHistoryByShop',(req,res)=>{
+app.get('/api/getHistoryForUser',(req,res)=>{
     // locahost:3001/api/books?skip=3&limit=2&order=asc
     let skip = parseInt(req.query.skip);
     let limit = parseInt(req.query.limit);
@@ -378,6 +378,16 @@ app.post('/api/user_info',(req,res)=>{
     })
 })
 
+
+// Return number of duplicate email account
+app.post('/api/check_user_email',(req,res)=>{
+    console.log(req.body);
+    User.find({'email': req.body.email}).count().exec((err,docs)=>{
+        if(err) return res.status(400).send(err);
+        res.send(docs)
+    })
+})
+
 /*    // ORDER = asc || desc
    Order.find({shopOwnerId:req.query.user}).skip(skip).sort({_id:order}).limit(limit).exec((err,docs)=>{
     if(err) return res.status(400).send(err);
@@ -443,6 +453,7 @@ if(process.env.NODE_ENV === 'production'){
         res.sendfile(path.resolve(__dirname,'../client','build','index.html'))
     })
 }
+
 
 
 // For production deployment
