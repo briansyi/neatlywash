@@ -80,6 +80,9 @@ const userSchema = mongoose.Schema({
     // This is for shop owner only!
     activated:{
         type:Boolean
+    },
+    assignedZIPs:{
+        type:String
     }
 })
 

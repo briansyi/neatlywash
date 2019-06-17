@@ -22,7 +22,8 @@ class EditUserInfo extends PureComponent {
         password:'',
         error:'',
         priceList:'',
-        lastOrderNo:''
+        lastOrderNo:'',
+        assignedZIPs:''
     }
 
     componentWillMount(){
@@ -44,7 +45,8 @@ class EditUserInfo extends PureComponent {
                 role:0,
                 password:userInfo.password,
                 priceList:'',
-                lastOrderNo:''
+                lastOrderNo:'',
+                assignedZIPs:userInfo.assignedZIPs
             }
         })
     }

@@ -6,7 +6,12 @@ import Popup from "reactjs-popup";
 import axios from 'axios';
 
 class Register extends PureComponent {
-
+    constructor(props) {
+        super(props);
+        let isOkay=true;
+        let msg='';
+        let disabledMsg=''
+    }
     state ={
         formdata:{
             firstName:'',
@@ -21,8 +26,11 @@ class Register extends PureComponent {
             role:0,
             password:'',
             priceList:'',
-            lastOrderNo:''
-        }
+            lastOrderNo:'',
+            assignedZIPs:''
+        },
+        emailError:'',
+        zipError:''
     }
     componentWillMount() {
         setTimeout(() => {
@@ -52,18 +60,28 @@ class Register extends PureComponent {
     handleInputEmail = (e) => {
         var userEmail = document.getElementById("userEmail").value;
 
-        axios.post(`/api/check_user_email?zip=${userEmail}`)
+        axios.post(`/api/checkUserEmail?email=${userEmail}`)
         .then(res => {
-            const shopEmailFromDB = res.data;
-            console.log(shopEmailFromDB); 
-            this.setState({shopInfo:shopEmailFromDB})
-            let tmpShopEmail = this.state.shopInfo[0].email
-            this.setState(prevState => ({
-                formdata: {
-                    ...prevState.formdata,
-                    shopEmail: tmpShopEmail
-                }
-            }))
+            console.log(res.data);
+            this.isOkay = res.data.isOkay;
+            this.msg = res.data.message;
+            if(this.isOkay) {
+                //regButton
+                document.getElementById("regButton").disabled = false;
+                this.setState(prevState => ({
+                    formdata: {
+                        ...prevState.formdata,
+                        email: userEmail
+                    },
+                    emailError:this.msg 
+                }))
+            } else {
+                document.getElementById("regButton").disabled = true;
+                this.setState(prevState => ({
+                    ...prevState,
+                    emailError:this.msg
+                }))
+            }
         })
         .catch(error =>{
             console.log(error);
@@ -124,6 +142,34 @@ class Register extends PureComponent {
     } 
     handleInputZip = (e) => {
         var userZip = document.getElementById("userZip").value;
+
+        axios.post(`/api/checkUserZip?zip=${userZip}`)
+        .then(res => {
+            console.log(res.data);
+            this.isOkay = res.data.isOkay;
+            this.msg = res.data.message;
+            if(this.isOkay) {
+                //regButton
+                document.getElementById("regButton").disabled = false;
+                this.setState(prevState => ({
+                    formdata: {
+                        ...prevState.formdata,
+                        zip: userZip
+                    },
+                    zipError:this.msg 
+                }))
+            } else {
+                document.getElementById("regButton").disabled = true;
+                this.setState(prevState => ({
+                    ...prevState,
+                    zipError:this.msg
+                }))
+            }
+        })
+        .catch(error =>{
+            console.log(error);
+        })        
+
         this.setState(prevState => ({
             formdata: {
                 ...prevState.formdata,
@@ -186,6 +232,9 @@ class Register extends PureComponent {
                             onChange={this.handleInputEmail}
                             required
                          />
+                    </div>
+                    <div className="error">
+                        {this.state.emailError}
                     </div>
                     <span>Your email will be your ID<br/> and you cannot change your email <br/>after the registration.</span>
 
@@ -261,7 +310,10 @@ class Register extends PureComponent {
                             required
                          />
                     </div>
-                        <Popup trigger={<button type="button">Register</button>} position="top center" modal>
+                    <div className="error">
+                        {this.state.zipError}
+                    </div>
+                        <Popup trigger={<button id="regButton" type="button">Register</button>} position="top center" modal>
                                 {close =>(
                                     <div className="fixWidthModal">
                                         <button type="submit">Proceed to Login</button>
@@ -270,9 +322,7 @@ class Register extends PureComponent {
                         </Popup>
                         {/* <button type="submit">Register</button> */}
                   
-                    <div className="error">
-                        {this.state.error}
-                    </div>
+                    
 
                 </form>
             </div>

@@ -11,11 +11,6 @@ class Header extends Component {
 
     onHideNav = () => {
         this.setState({showNav:false})
-        console.log("123Clicked!!!!");
-    }
-
-    onClicked = () => {
-        console.log("Clicked!!!!");
     }
 
     render() {

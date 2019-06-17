@@ -64,7 +64,8 @@ app.get('/api/auth',auth,(req,res)=>{
         zip:req.user.zip,
         lastOrderNo:req.user.lastOrderNo,
         lastPickUpDate:req.user.lastPickUpDate,
-        role:req.user.role
+        role:req.user.role,
+        assignedZIPs:req.user.assignedZIPs
     })
 })
 
@@ -157,10 +158,6 @@ app.get('/api/getShopForAdmin',(req,res)=>{
     })
 })
 
-
-
-
-
 // Order History by shop
 app.get('/api/getHistoryByShopAll',(req,res)=>{
     Order.find({shopOwnerId:req.query.user}).exec((err,docs)=>{
@@ -198,8 +195,10 @@ app.get('/api/users',(req,res)=>{
 // Get shop list in same zip code
 // role:1 -> shop owner only
 app.get('/api/getShops',(req,res)=>{
+    var qureyZIPs = RegExp(".*"+req.query.zip+".*");
+    console.log("Check in "+queryZIPs);
     User.find({$and:
-        [{zip:req.query.zip},
+        [{assignedZIPs:qureyZIPs},
             {role:1}
         ]}).exec((err,docs)=>{
         if(err) return res.status(400).send(err);
@@ -305,6 +304,7 @@ app.post('/api/sendEmailToShopOwner',(req,res)=>{
     console.log(req.body);
     const order = new Order(req.body); 
     console.log(order);
+    var qureyZIPs = RegExp(".*"+req.query.zip+".*");
     order.save((err,doc)=>{
         console.log(err);
         if(err) return res.status(400).send(err);
@@ -315,7 +315,7 @@ app.post('/api/sendEmailToShopOwner',(req,res)=>{
     })
 
     User.find({$and:[
-        {zip:req.query.zip},
+        {assignedZIPs:qureyZIPs},
         {role:1}
         ]}
         ).toArray(function(err, result) {
@@ -357,10 +357,9 @@ app.post('/api/sendEmailToShopOwner',(req,res)=>{
 
 // Get Shop Email By Zip
 app.post('/api/getShopEmailByZip',(req,res)=>{
-    const user = new User(req.body);
-
+    var qureyZIPs = RegExp(".*"+req.query.zip+".*");
     User.find({$and:
-        [{zip:req.query.zip},
+        [{assignedZIPs:qureyZIPs},
             {role:1}
         ]}).limit(1).exec((err,docs)=>{
         if(err) return res.status(400).send(err);
@@ -380,11 +379,31 @@ app.post('/api/user_info',(req,res)=>{
 
 
 // Return number of duplicate email account
-app.post('/api/check_user_email',(req,res)=>{
-    console.log(req.body);
-    User.find({'email': req.body.email}).count().exec((err,docs)=>{
+/* app.post('/api/checkUserEmail',(req,res)=>{
+    console.log("Body is "+req.query.email);
+    User.find({'email': req.query.email}).count().exec((err,docs)=>{
         if(err) return res.status(400).send(err);
         res.send(docs)
+    })
+}) */
+app.post('/api/checkUserEmail',(req,res)=>{
+    console.log("Body is "+req.query.email);
+    User.findOne({'email': req.query.email},(err,user)=>{
+        if(!user) return res.status(200).json({isOkay:true, message:'You can use this email.'})
+        else return res.status(200).json({isOkay:false, message:'This email is already registered.'})
+    })
+})
+
+
+// Check if there is a shop with user's zip
+//axios.post(`/api/checkUserZip?zip=${userZip}`)
+app.post('/api/checkUserZip',(req,res)=>{
+    //var qureyZIPs = ;
+    var qureyZIPs = RegExp(".*"+req.query.zip+".*");
+    console.log("Body is "+qureyZIPs);
+    User.findOne({assignedZIPs: qureyZIPs},(err,user)=>{
+        if(user) return res.status(200).json({isOkay:true, message:'We have a service provider in your zip.'})
+        else return res.status(200).json({isOkay:false, message:'Sorry. We do not have a service provider in your zip.'})
     })
 })
 
