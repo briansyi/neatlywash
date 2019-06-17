@@ -5,6 +5,9 @@ import { NavLink } from "react-router-dom";
 
 import OrderItem from '../widgetsUI/order_item';
 
+import Slider from 'react-animated-slider';
+import 'react-animated-slider/build/horizontal.css';
+
 class HomeContainer extends Component {
 
     componentWillMount(){
@@ -46,6 +49,12 @@ class HomeContainer extends Component {
             <br/>
             <br/>
             <br/>
+            <div>
+                <Slider>
+	                <img src="/images/SlideN01.png" />
+	                <img src="/images/SlideN02.png" />
+                </Slider>
+            </div>
             <div> 
                 <NavLink to={{
                         // Need to update
