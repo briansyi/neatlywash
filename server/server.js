@@ -143,15 +143,16 @@ app.get('/api/getShopForAdmin',(req,res)=>{
     //console.log("req: " + req.query.email);
     let skip = parseInt(req.query.skip);
     let limit = parseInt(req.query.limit);
-    let user = req.query.user;
+    //let user = req.query.user;
     let active = parseInt(1);
     let inActive = parseInt(-1);
+    let order = req.query.order;
 
     User.find({$or:[
         {role:active},
         {role:inActive}
     ]}
-    ).skip(skip).sort({_id:user}).limit(limit).exec((err,doc)=>{
+    ).skip(skip).sort({_id:order}).limit(limit).exec((err,doc)=>{
         if(err) return res.status(400).send(err);
         console.log(doc);
         res.send(doc)

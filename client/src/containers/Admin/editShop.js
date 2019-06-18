@@ -4,7 +4,12 @@ import { getUser, userInfoUpdate } from '../../actions';
 import { AsYouType } from 'libphonenumber-js';
 
 class EditUserInfo extends PureComponent {
-
+    constructor(props) {
+        super(props);
+        let isOkay=true;
+        let msg='';
+        let disabledMsg=''
+    }
 
     state ={
         _id:'',
@@ -18,7 +23,7 @@ class EditUserInfo extends PureComponent {
         city:'',
         state:'',
         zip:'',
-        role:0,
+        role:1,
         password:'',
         error:'',
         priceList:'',
@@ -27,6 +32,7 @@ class EditUserInfo extends PureComponent {
     }
 
     componentWillMount(){
+        console.log("I am in admin.");
         console.log(this.props.user);
         this.props.dispatch(getUser())
         let userInfo = this.props.user.login;
@@ -42,7 +48,7 @@ class EditUserInfo extends PureComponent {
                 city:userInfo.city,
                 state:userInfo.state,
                 zip:userInfo.zip,
-                role:0,
+                role:1,
                 password:userInfo.password,
                 priceList:'',
                 lastOrderNo:'',
@@ -70,7 +76,7 @@ class EditUserInfo extends PureComponent {
             }
         }))
     } 
-/*     handleInputEmail = (e) => {
+     handleInputEmail = (e) => {
         var userEmail = document.getElementById("userEmail").value;
         this.setState(prevState => ({
             formdata: {
@@ -78,7 +84,7 @@ class EditUserInfo extends PureComponent {
                 email:userEmail
             }
         }))
-    } */
+    } 
     handleInputPhoneNo = (e) => {
         var userPhoneNo = document.getElementById("userPhoneNo").value;
         var phoneTest = new AsYouType('US').input(userPhoneNo);
@@ -143,14 +149,20 @@ class EditUserInfo extends PureComponent {
             }
         }))
     }
-
+    handleInputAssignedZIPs = (e) => {
+        var userAssignedZIPs = document.getElementById("userAssignedZIPs").value;
+        this.setState(prevState => ({
+            formdata: {
+                ...prevState.formdata,
+                assignedZIPs:userAssignedZIPs
+            }
+        }))
+    } 
     submitForm = (e) => {
         e.preventDefault();
         this.props.dispatch(userInfoUpdate(this.state.formdata))
-        this.props.history.push('/user');
+        this.props.history.push('/admin/shops');
     }
-
-
 
     render() {
         let user = this.props.user;
@@ -165,7 +177,6 @@ class EditUserInfo extends PureComponent {
                             id="userFirstName"
                             value={this.state.formdata.firstName}
                             onChange={this.handleInputFirstName}
-                            required
                          />
                     </div>
 
@@ -176,18 +187,17 @@ class EditUserInfo extends PureComponent {
                             id="userLastName"
                             value={this.state.formdata.lastName}
                             onChange={this.handleInputLastname}
-                            required
                          />
                     </div>
 
                     <div className="form_element">
-{/*                         <input
+                       <input
                             type="email"
                             placeholder="Enter Email"
                             value={this.state.formdata.email}
                             onChange={this.handleInputEmail}
                             disabled
-                        />  */}
+                        /> 
                         <h3>{this.state.formdata.email}</h3>
                     </div>
 
@@ -198,7 +208,6 @@ class EditUserInfo extends PureComponent {
                             id="userPassword"
                             value={this.state.formdata.password}
                             onChange={this.handleInputPassword}
-                            required
                          />
                     </div>
                     <div className="form_element">
@@ -208,7 +217,6 @@ class EditUserInfo extends PureComponent {
                             id="userPhoneNo"
                             value={this.state.formdata.phoneNo}
                             onChange={this.handleInputPhoneNo}
-                            required
                          />
                          <br/>
                     </div>
@@ -220,7 +228,6 @@ class EditUserInfo extends PureComponent {
                             id="userAddress1"
                             value={this.state.formdata.address1}
                             onChange={this.handleInputAddress1}
-                            required
                          />
                     </div>
                     <div className="form_element">
@@ -239,7 +246,6 @@ class EditUserInfo extends PureComponent {
                             id="userCity"
                             value={this.state.formdata.city}
                             onChange={this.handleInputCity}
-                            required
                          />
                     </div>
                     <div className="form_element">
@@ -249,7 +255,6 @@ class EditUserInfo extends PureComponent {
                             id="userState"
                             value={this.state.formdata.state}
                             onChange={this.handleInputState}
-                            required
                          />
                     </div>
                     <div className="form_element">
@@ -259,10 +264,17 @@ class EditUserInfo extends PureComponent {
                             id="userZip"
                             value={this.state.formdata.zip}
                             onChange={this.handleInputZip}
-                            required
                          />
                     </div>
-
+                    <div className="form_element">
+                        <input
+                            type="zip"
+                            placeholder="Enter Assigned ZIPs"
+                            id="userAssignedZIPs"
+                            value={this.state.formdata.assignedZIPs}
+                            onChange={this.handleInputAssignedZIPs}
+                         />
+                    </div>
                     <button type="submit">Save</button>
                     <div className="error">
                         {this.state.error}

@@ -1,5 +1,5 @@
 import React from 'react';
-import AdminHomeContainer from '../../containers/shopList4Admin_container'
+import AdminHomeContainer from '../../containers/shop_container'
 
 const AdminHome = () => {
     return (

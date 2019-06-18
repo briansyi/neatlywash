@@ -48,6 +48,9 @@ import UpdateOrder from './components/Orders/update';
 //For the user -edit
 import EditUserInfo from './containers/User/edit';
 
+//For the Admin.
+import AdminEditShopInfo from './containers/Admin/editShop'
+
 const Routes = () => {
     return (
         <Layout>
@@ -77,6 +80,7 @@ const Routes = () => {
                 <Route path="/services" exact component={Auth(Services,true)}/>
                 <Route path="/shop/mission-control" exact component={Auth(ShopOwnerHome,true)}/>
                 <Route path="/admin/shops" exact component={Auth(AdminHome,true)}/>
+                <Route path="/admin/shop/edit" exact component={Auth(AdminEditShopInfo,true)}/>
                 {/* <Route path="/user/todays-pickups" exact component={Auth(TodaysPickUp,true)}/> 
                 <Route path="/user/pickups_in_the_shop" exact component={Auth(PickUpInTheShop,true)}/>*/}
             </Switch>
