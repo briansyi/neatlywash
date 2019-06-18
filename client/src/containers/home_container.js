@@ -75,6 +75,8 @@ class HomeContainer extends Component {
                     <img alt="Log In" src="/images/LogIn.png" className="imgFrontBtn"/>
                     </NavLink>
             </div>
+            <br/>
+            <br/>
             </center>
             
         );
