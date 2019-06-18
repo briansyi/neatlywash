@@ -55,6 +55,8 @@ class HomeContainer extends Component {
 	                <img src="/images/SlideN02.png" />
                 </Slider>
             </div>
+            <br/>
+            <br/>
             <div> 
                 <NavLink to={{
                         // Need to update

@@ -32,10 +32,17 @@ class ShopList4AdminContainer extends Component {
         return (
             <div>
                {this.renderItems(this.props.shops4Admin)}
-               <div
-                    className="loadmore"
-                    onClick={this.loadmore}
-                >Load More</div>
+                <div
+                    className="addShop"
+                    onClick={this.readyForPickupsOnly}
+                >Ready for pickups</div>
+                <br/>
+                <div className="form_element">
+                    <input type="text" name="searchShopByZip" id="searchShopByZip" placeholder="Look for Shop by ZIP" />
+                    <button onClick={this.lookForOrderNo}>
+                            Search
+                    </button>
+                </div>
             </div>
             
         );

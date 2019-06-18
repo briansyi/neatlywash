@@ -58,6 +58,7 @@ class UpdateOrder extends PureComponent {
                 orderStatus: "p"
             }
         }))
+        console.log(this.state.formdata);
     }
     
     handleCheckBox = (e) => {
@@ -71,7 +72,7 @@ class UpdateOrder extends PureComponent {
     }
 
     // Completed/Delivered
-    cancelPickUp = () => {
+    completedOrder = () => {
         this.setState(prevState => ({
             formdata: {
                 ...prevState.formdata,
@@ -83,6 +84,7 @@ class UpdateOrder extends PureComponent {
 
     submitForm = (e) => {
         e.preventDefault();
+        console.log(this.state.formdata);
         this.props.dispatch(updateOrder(this.state.formdata))
     }
 
@@ -92,9 +94,7 @@ class UpdateOrder extends PureComponent {
     }
 
     componentWillReceiveProps(nextProps){
-        console.log(nextProps)
         let order = nextProps.orders.order;
-        console.log("Here is next prop order:\n"+ order);
         this.setState({
             formdata:{
                 _id:order._id,

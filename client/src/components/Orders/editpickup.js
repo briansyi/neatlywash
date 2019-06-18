@@ -129,7 +129,7 @@ class EditPickUp extends PureComponent {
 
     render() {
         let orders = this.props.orders;
-        console.log("I am in edit??!!\n"+this.props);
+        console.log("I am in edit??!!?\n"+this.props);
         console.log(this.state.formdata);
         return (
             <div className="rl_container article">
