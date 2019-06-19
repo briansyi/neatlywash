@@ -515,6 +515,8 @@ header .navItem span {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
     padding-left: 20px;
     padding-right: 20px;
     text-align:center;    
