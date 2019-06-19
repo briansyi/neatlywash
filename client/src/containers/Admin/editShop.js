@@ -34,8 +34,8 @@ class EditUserInfo extends PureComponent {
     componentWillMount(){
         console.log("I am in admin.");
         console.log(this.props.user);
-        this.props.dispatch(getUser())
-        let userInfo = this.props.user.login;
+/*         this.props.dispatch(getUser())*/
+        let userInfo = this.props.user.login; 
         this.setState({
             formdata:{
                 _id:userInfo.id,

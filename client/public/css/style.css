@@ -43,7 +43,7 @@ header .open_nav {
 
 header .navItem {
     font-weight: 300;
-    font-size: 16px;
+    font-size: 20px;
     color:#bababa;
     padding:10px;
     border-top: 1px solid #404040;
@@ -502,7 +502,12 @@ header .navItem span {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    padding: 20px;
+    margin-top:-3px;
+    margin-bottom:-5px;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top:none;
+    padding-bottom:none;
     text-align:center;    
 }
 .imgFrontBtn{
@@ -510,7 +515,8 @@ header .navItem span {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    padding: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
     text-align:center;    
 }
 .imgDashboard{
@@ -567,4 +573,12 @@ header .navItem span {
     padding: 20px;
     font-weight: 500;
     cursor: pointer;
+}
+
+.homeBorderForSlides{
+    width:50%;
+    padding-right:80px;
+    padding-left:80px;
+    margin-top:-5px;
+    margin-bottom:-5px;
 }

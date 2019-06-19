@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getShopForAdmin } from '../actions';
-
+import { withRouter } from 'react-router-dom';
 import ShopItem from '../widgetsUI/shop_item';
 
 class ShopContainer extends Component {
@@ -23,6 +23,7 @@ class ShopContainer extends Component {
         :null
     )
 
+
     loadmore = () => {
         let count = this.props.shops.list.length;
         console.log(this.props);
@@ -33,10 +34,14 @@ class ShopContainer extends Component {
         return (
             <div>
                {this.renderItems(this.props.shops)}
-                <div
-                    className="addShop"
-                    onClick={this.readyForPickupsOnly}
-                >Ready for pickups</div>
+               {/* <div
+                    onClick={() => {this.props.history.push('/shop/register')}}>Add Shop
+                </div> */}
+                <div>
+                <button
+                    type='button'
+                    onClick={() => {this.props.history.push('/shop/register')}}>Add the shop</button>
+                </div>
                 <br/>
                 <div className="form_element">
                     <input type="text" name="searchShopByZip" id="searchShopByZip" placeholder="Look for Shop by ZIP" />

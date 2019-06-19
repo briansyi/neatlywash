@@ -30,32 +30,18 @@ class HomeContainer extends Component {
 
     render() {
         return (
-           // <div className="avatar">
            <center>
-               <br/>
-               <br/>
-            <div>
-                <h1>Welcome to</h1>
-            </div>
-            <div id="logo_container">
+               <div><h1>Welcome to</h1></div>
             
+            <div id="logo_container">
                 <img alt="Neatly Wash Logo" src="/images/ani_logo.gif" className="imgFrontLogo"/>
-               {/* {this.renderItems(this.props.orders)}
-               <div 
-                    className="loadmore"
-                    onClick={this.loadmore}
-                >Load More</div> */}
             </div>
-            <br/>
-            <br/>
-            <br/>
-            <div>
-                <Slider>
+            <div className="homeBorderForSlides">
+                <Slider style="height:200px !important">
 	                <img src="/images/SlideN01.png" />
 	                <img src="/images/SlideN02.png" />
                 </Slider>
             </div>
-            <br/>
             <br/>
             <div> 
                 <NavLink to={{
