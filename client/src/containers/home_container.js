@@ -38,8 +38,8 @@ class HomeContainer extends Component {
             </div>
             <div className="homeBorderForSlides">
                 <Slider style="height:200px !important">
-	                <img src="/images/SlideSNN01.png" />
-	                <img src="/images/SlideSNN02.png" />
+	                <img src="/images/SlideHome01.png" />
+	                <img src="/images/SlideHome02.png" />
                 </Slider>
             </div>
             <br/>
