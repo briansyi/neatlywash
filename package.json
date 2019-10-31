@@ -32,7 +32,7 @@
     "micromatch": "^3.1.10",
     "moment": "^2.24.0",
     "moment-js": "^1.1.15",
-    "mongoose": "^5.3.8",
+    "mongoose": "^5.7.5",
     "nodemailer": "^4.6.8",
     "nodemon": "^1.18.5",
     "react-animated-slider": "^1.1.4"
